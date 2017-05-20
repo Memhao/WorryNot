@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menu_buttons">
+        <item>@drawable/info_button</item>
+        <item>@drawable/change_password_button</item>
+        <item>@drawable/logout_button</item>
+    </string-array>
+
+</resources>

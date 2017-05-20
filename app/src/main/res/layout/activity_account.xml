@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/welcome_account_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Welcome "
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/colorPrimaryDark"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/newPassword_account_et"
+        android:hint="New Password" />
+
+    <Button
+        android:text="Add worry not"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createMethod_account_btn" />
+    <Button
+        android:text="Change password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/changePassword_account_btn" />
+    <Button
+        android:text="Logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logOut_account_btn" />
+    <Button
+        android:text="Profile Activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileActivity_account_btn" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_weight="0.19">
+        <View
+            android:layout_width="200dp"
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:background="#c4c8c9"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HAVE FUN !"
+            android:padding="5dp"/>
+        <View
+            android:layout_width="200dp"
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:background="#c4c8c9"
+            />
+    </LinearLayout>
+</LinearLayout>

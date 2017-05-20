@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_method"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="licence.meme.worrynot.licence.meme.worrynot.licence.meme.worrynot.activities.obsolated.AddMethodActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+          <TextView
+              android:text="Create your own WorryNot"
+              android:textColor="@color/colorPrimaryDark"
+              style="@style/Base.Widget.AppCompat.Button.Borderless"
+              android:textAlignment="center"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/title_addMethod_tv"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true" />
+
+          <TextView
+              android:layout_below="@+id/title_addMethod_tv"
+              android:text="Name it!"
+              android:textColor="@color/colorPrimaryDark"
+              style="@style/Base.Widget.AppCompat.Button.Borderless"
+              android:textAlignment="center"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/name_addMethod_tv"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true" />
+
+          <EditText
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:layout_below="@+id/name_addMethod_tv"
+              android:id="@+id/name_addMethod_et"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true" />
+          <TextView
+              android:id="@+id/story_addMethod_tv"
+              android:layout_below="@+id/name_addMethod_et"
+              android:text="Story it!"
+              android:textColor="@color/colorPrimaryDark"
+              style="@style/Base.Widget.AppCompat.Button.Borderless"
+              android:textAlignment="center"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true" />
+
+          <EditText
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:layout_below="@+id/story_addMethod_tv"
+              android:id="@+id/story_addMethod_et"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true" />
+          <TextView
+              android:layout_below="@+id/story_addMethod_et"
+              android:text="Describe it!"
+              android:textColor="@color/colorPrimaryDark"
+              style="@style/Base.Widget.AppCompat.Button.Borderless"
+              android:textAlignment="center"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/description_addMethod_tv"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true" />
+          <EditText
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="textPersonName"
+              android:ems="10"
+              android:layout_below="@+id/description_addMethod_tv"
+              android:id="@+id/description_addMethod_et"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true" />
+
+          <TextView
+              android:layout_below="@+id/description_addMethod_et"
+              android:text="Step it!"
+              android:textColor="@color/colorPrimaryDark"
+              style="@style/Base.Widget.AppCompat.Button.Borderless"
+              android:textAlignment="center"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/steps_addMethod_tv"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true" />
+          <LinearLayout
+              android:id="@+id/dynamically_container_addMethod_ll"
+              android:layout_below="@+id/steps_addMethod_tv"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical">
+
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                  <Button
+                      android:id="@+id/dynamically_add_addMethod_btn"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentRight="true"
+                      android:text="Add" />
+
+                  <AutoCompleteTextView
+                      android:id="@+id/textin_addMethod_actv"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentLeft="true"
+                      android:layout_toLeftOf="@id/dynamically_add_addMethod_btn" />
+              </RelativeLayout>
+
+              <LinearLayout
+                  android:id="@+id/container"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"></LinearLayout>
+
+          </LinearLayout>
+          <Button
+              android:text="Save it!"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/dynamically_container_addMethod_ll"
+              android:layout_marginTop="38dp"
+              android:id="@+id/save_addMethod_btn"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true" />
+          <Button
+              android:text="Back!"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/save_addMethod_btn"
+              android:layout_marginTop="38dp"
+              android:id="@+id/back_adddMethod_btn"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true" />
+
+      </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

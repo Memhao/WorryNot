@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "247620853048",
+    "firebase_url": "https://worrynot-270e6.firebaseio.com",
+    "project_id": "worrynot-270e6",
+    "storage_bucket": "worrynot-270e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247620853048:android:367d420c6559078a",
+        "android_client_info": {
+          "package_name": "licence.meme.worrynot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247620853048-psblun50l6gi3rsujtijba7p237o59i6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "licence.meme.worrynot",
+            "certificate_hash": "ce909dc88560ec2842ac99843dd4379b014f8624"
+          }
+        },
+        {
+          "client_id": "247620853048-g764ac1oth8ensb9c2540grpjcna01hg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtoATP8pIrzK0qlD2UnAkJNEpI1caDvik"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247620853048-g764ac1oth8ensb9c2540grpjcna01hg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

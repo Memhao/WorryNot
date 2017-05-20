@@ -1,0 +1,116 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="licence.meme.worrynot.licence.meme.worrynot.licence.meme.worrynot.licence.meme.worrynot.fragments.obsolated.MyProfile">
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Profile"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:id="@+id/content_text_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_dark"
+            android:clickable="true"
+            android:onClick="toggle_contents"
+            android:padding="10dp"
+            android:text="@string/title"
+            android:textColor="@android:color/white" />
+
+        <!--content to hide/show -->
+        <TextView
+            android:id="@+id/title_text_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="10dp"
+            android:text="@string/long_content"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/content_text_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_dark"
+            android:clickable="true"
+            android:onClick="toggle_contents"
+            android:padding="10dp"
+            android:text="@string/title"
+            android:textColor="@android:color/black" />
+
+        <!--content to hide/show -->
+        <TextView
+            android:id="@+id/title_text_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:padding="10dp"
+            android:text="@string/long_content"
+            android:textColor="@android:color/black" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RatingBar
+                android:id="@+id/ratingMethod1_my_profile_rb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="1"
+                android:numStars="5"/>
+
+            <RatingBar
+                android:id="@+id/ratingMethod2_my_profile_rb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/submit_my_profile_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit" />
+
+
+            <QuickContactBadge
+                android:id="@+id/quickContactBadge"
+                android:layout_width="62dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:visibility="visible"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <ProgressBar
+                android:id="@+id/experience_my_profile_pb"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/level_my_profile_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="level" />
+
+
+    </LinearLayout>
+
+</FrameLayout>

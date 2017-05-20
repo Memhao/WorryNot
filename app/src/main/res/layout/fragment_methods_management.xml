@@ -1,0 +1,40 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="licence.meme.worrynot.licence.meme.worrynot.licence.meme.worrynot.licence.meme.worrynot.fragments.obsolated.MethodsManagement">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Worrynots management"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/colorPrimaryDark" />
+        <Button
+
+            android:id="@+id/add_worrynot_f_btn"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Add worry not" />
+        <Button
+
+            android:id="@+id/delete_worrynot_f_btn"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Delete WorryNot" />
+        <Button
+
+            android:id="@+id/rate_worrynot_f_btn"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Rate WorryNot" />
+    </LinearLayout>
+
+
+</FrameLayout>

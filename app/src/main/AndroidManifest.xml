@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="licence.meme.worrynot">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".WorryNotMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".licence.meme.worrynot.profile.LoginActivity">
+            <intent-filter>
+                <action android:name="licence.meme.worrynot.LOGIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".licence.meme.worrynot.profile.AccountActivity">
+            <intent-filter>
+                <action android:name="licence.meme.worrynot.ACCOUNT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".licence.meme.worrynot.profile.ForgotPasswordActivityD">
+            <intent-filter>
+                <action android:name="licence.meme.worrynot.FORGOTPASSWORD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".licence.meme.worrynot.profile.SignUpActivityD">
+            <intent-filter>
+                <action android:name="licence.meme.worrynot.SIGNUP" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".licence.meme.worrynot.method.CreateMethod" />
+        <activity
+            android:name=".licence.meme.worrynot.method.ProfileActivityDeprecated"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".licence.meme.worrynot.licence.meme.worrynot.activities.obsolated.AddMethodActivity">
+            <intent-filter>
+                <action android:name="licence.meme.worrynot.activities.AddMethodActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".licence.meme.worrynot.licence.meme.worrynot.activities.obsolated.RetrieveActivity">
+            <intent-filter>
+                <action android:name="licence.meme.worrynot.activities.RetrieveActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.MainActivity" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_register"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_forgot_password"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme"></activity>
+    </application>
+
+</manifest>
