@@ -8,6 +8,7 @@
     tools:context="licence.meme.worrynot.activities.MainActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_picture_register_activity_civ"
         android:layout_width="210dp"
         android:layout_height="160dp"
         android:src = "@drawable/kakashi_hatake"
@@ -51,7 +52,7 @@
         android:textColorHint="#AF5910"
         android:textStyle="bold"
         android:ems="10"
-        android:inputType="textPassword"
+        android:inputType="textEmailAddress"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"

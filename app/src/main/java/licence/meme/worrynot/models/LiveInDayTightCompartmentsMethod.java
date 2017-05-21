@@ -16,7 +16,7 @@ public class LiveInDayTightCompartmentsMethod {
         private List<String > steps = new LinkedList<String>();
 
         public LiveInDayTightCompartmentsMethod(){
-                name = "Live in Day-tight Compartiments";
+                name = "Live in Day-tight Compartments";
                 author = "Sir William Osier";
                 story = new String("Story"+"\n"+"Sir William Osier had crossed the Atlantic on a great ocean liner where the captain standing on the bridge,"+
                         " could press a button and-presto! - there was a clanging machinery and various parts of the ship "+

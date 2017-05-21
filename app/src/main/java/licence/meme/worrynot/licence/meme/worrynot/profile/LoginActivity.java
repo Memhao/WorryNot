@@ -17,9 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import licence.meme.worrynot.R;
 
-/**
- * Created by xander on 24.02.2017.
- */
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText emailEditText,passwordEditText;
@@ -46,9 +43,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         loginButton.setOnClickListener(this);
         forgotPasswordTextView.setOnClickListener(this);
         signUpTextView.setOnClickListener(this);
-/**
- * This will keep current session if user is login
- */
         if(auth.getCurrentUser()!=null){
             startActivity(new Intent(LoginActivity.this,AccountActivity.class));
         }
@@ -62,7 +56,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.login_signup_tv:
-                startActivity(new Intent(LoginActivity.this,SignUpActivityD.class));
+//                startActivity(new Intent(LoginActivity.this,SignUpActivityD.class));
                 finish();
                 break;
             case R.id.login_btn:
