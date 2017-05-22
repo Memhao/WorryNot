@@ -25,6 +25,9 @@ import licence.meme.worrynot.R;
  */
 
 public class Method {
+    public Method(){
+
+    }
     private Metadata metadata;
     private Info info;
 

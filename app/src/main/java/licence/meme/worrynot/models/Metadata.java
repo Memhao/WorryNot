@@ -16,7 +16,9 @@ public class Metadata {
         this.name = name;
     }
 
+    public Metadata(){
 
+    }
     public String getAuthor() {
         return author;
     }

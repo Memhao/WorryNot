@@ -1,17 +1,12 @@
 package licence.meme.worrynot.activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.storage.StorageManager;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,20 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.SignupService;
+import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.util.Utils;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private StorageReference mStorage;
 //    private ProgressDialog mProgress;
 
-    private  SignupService mSignupService;
+    private FirebaseService mFirebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        mSignupService = new SignupService();
+        mFirebaseService = FirebaseService.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
         mRegisterButton = (Button)findViewById(R.id.register_register_activity_btn);
         mBackButton = (Button)findViewById(R.id.back_register_activity_btn);
@@ -90,13 +78,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 final String repeatpassword = mRepeatPasswordEditText.getText().toString();
                 final String username = mUserNameEditText.getText().toString();
                 final String image = Utils.encodeBitmap(mProfileImage);
-//                final String image = "X-image";
                 final Activity activity = RegisterActivity.this;
                 if(password.equals(repeatpassword)
                         && !email.equals("")
                         && !username.equals("")
                         ){
-                    mSignupService.signUp(RegisterActivity.this,email,password,username,image);
+                    mFirebaseService.signUp(RegisterActivity.this,email,password,username,image);
                 }
                 else{
                     Toast.makeText(this,"Error: Smt went wrong",Toast.LENGTH_SHORT).show();

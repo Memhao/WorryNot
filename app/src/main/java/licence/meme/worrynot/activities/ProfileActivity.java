@@ -15,15 +15,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.fragments.HomeFragment;
+import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
 import licence.meme.worrynot.fragments.MethodManagerFragment;
 
 public class ProfileActivity extends AppCompatActivity implements
             HomeFragment.OnFragmentInteractionListener,
-            MethodManagerFragment.OnFragmentInteractionListener
+            MethodManagerFragment.OnFragmentInteractionListener,
+            MethodContainerPopUpFragment.OnFragmentInteractionListener
         {
 
     /**
@@ -144,8 +147,11 @@ public class ProfileActivity extends AppCompatActivity implements
                      Fragment methodManagerFragment = new MethodManagerFragment();
                      return methodManagerFragment;
                  case 2:
-                 Fragment homeFragment2 = new HomeFragment();
-                 return homeFragment2;
+                     Fragment homeFragment2 = new HomeFragment();
+                     return homeFragment2;
+                 case 3:
+                     Fragment methodsContainer = new MethodContainerPopUpFragment();
+                     return methodsContainer;
                  default:
                      return null;
              }
@@ -153,8 +159,8 @@ public class ProfileActivity extends AppCompatActivity implements
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         @Override
@@ -166,6 +172,8 @@ public class ProfileActivity extends AppCompatActivity implements
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
+                case 3:
+                    return "SECTION 4";
             }
             return null;
         }

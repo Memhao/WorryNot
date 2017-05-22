@@ -3,22 +3,30 @@ package licence.meme.worrynot.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.List;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.models.Method;
+import licence.meme.worrynot.models.MethodAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MethodsStoreFragment.OnFragmentInteractionListener} interface
+ * {@link MethodContainerPopUpFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MethodsStoreFragment#newInstance} factory method to
+ * Use the {@link MethodContainerPopUpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MethodsStoreFragment extends Fragment {
+public class MethodContainerPopUpFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,8 +37,8 @@ public class MethodsStoreFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
-    public MethodsStoreFragment() {
+    private ListView mListView;
+    public MethodContainerPopUpFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +48,11 @@ public class MethodsStoreFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MethodsStoreFragment.
+     * @return A new instance of fragment MethodContainerPopUpFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MethodsStoreFragment newInstance(String param1, String param2) {
-        MethodsStoreFragment fragment = new MethodsStoreFragment();
+    public static MethodContainerPopUpFragment newInstance(String param1, String param2) {
+        MethodContainerPopUpFragment fragment = new MethodContainerPopUpFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,9 +73,14 @@ public class MethodsStoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View return_view = inflater.inflate(R.layout.fragment_methods_store, container, false);
+        View return_view = inflater.inflate(R.layout.fragment_method_container_pop_up, container, false);
+        mListView =(ListView) return_view.findViewById(R.id.list_methods_container_lv);
+
+        FirebaseService.getInstance().populateMethodsContainer(mListView,return_view.getContext());
         return return_view;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -103,7 +116,7 @@ public class MethodsStoreFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-     interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }

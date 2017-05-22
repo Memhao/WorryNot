@@ -11,7 +11,9 @@ import java.util.List;
 public class Info {
     private String story;
     private List<String> steps;
+    public Info(){
 
+    }
     public Info(String story, List<String> steps) {
         this.story = story;
         this.steps = steps;
@@ -49,7 +51,7 @@ public class Info {
     }
 
 
-    public void setSteps(LinkedList<String> steps) {
+    public void setSteps(List<String> steps) {
         this.steps = steps;
     }
 }

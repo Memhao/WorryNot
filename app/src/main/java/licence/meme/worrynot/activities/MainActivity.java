@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.models.FirebaseService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
+
+    private FirebaseService mFirebaseService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        mFirebaseService = FirebaseService.getInstance();
         mLoginButton = (Button)findViewById(R.id.login_main_activity_btn);
         mForgtoPasswordButton = (Button)findViewById(R.id.forgot_main_activity_btn);
         mRegisterButton = (Button)findViewById(R.id.signup_main_avitivty_btn);
@@ -43,8 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_main_activity_btn:
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                finish();
+                mFirebaseService.loginUser(MainActivity.this,mEmailEditText.getText().toString(),mPasswordEditText.getText().toString());
                 break;
             case R.id.forgot_main_activity_btn:
                 startActivity(new Intent(MainActivity.this,ForgotPasswordActivity.class));

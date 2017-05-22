@@ -1,0 +1,59 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="licence.meme.worrynot.fragments.MethodContainerPopUpFragment">
+
+
+   <android.support.constraint.ConstraintLayout
+       android:background="@drawable/background720x1280_plain"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+      <Button
+          android:id="@+id/cancel_fragment_methods_container_btn"
+          android:layout_width="200dp"
+          android:layout_height="50dp"
+          android:layout_below="@+id/choose_mtd_methods_store_tv"
+          android:layout_marginTop="8dp"
+          app:layout_constraintTop_toBottomOf="@+id/list_methods_container_lv"
+          app:layout_constraintBottom_toBottomOf="parent"
+          android:layout_marginBottom="8dp"
+          android:layout_marginLeft="8dp"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_marginRight="8dp"
+          app:layout_constraintRight_toRightOf="parent">
+
+      </Button>
+      <TextView
+          android:id="@+id/choose_mtd_methods_container_tv"
+          android:layout_width="200dp"
+          android:layout_height="50dp"
+          android:text="@string/choose_methods_store_fragment"
+          app:layout_constraintTop_toTopOf="parent"
+          android:layout_marginTop="8dp"
+          android:layout_marginLeft="8dp"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_marginRight="8dp"
+          app:layout_constraintRight_toRightOf="parent" />
+
+      <ListView
+          android:id="@+id/list_methods_container_lv"
+          android:layout_width="200dp"
+          android:layout_height="300dp"
+          android:layout_marginTop="8dp"
+          app:layout_constraintTop_toBottomOf="@+id/choose_mtd_methods_container_tv"
+          android:layout_marginLeft="8dp"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_marginRight="8dp"
+          app:layout_constraintRight_toRightOf="parent">
+
+      </ListView>
+   </android.support.constraint.ConstraintLayout>
+
+
+
+
+
+</FrameLayout>
