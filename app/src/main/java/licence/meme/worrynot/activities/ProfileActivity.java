@@ -22,12 +22,16 @@ import licence.meme.worrynot.R;
 import licence.meme.worrynot.fragments.HomeFragment;
 import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
 import licence.meme.worrynot.fragments.MethodManagerFragment;
+import licence.meme.worrynot.fragments.MethodsStoreFragment;
+import licence.meme.worrynot.models.Method;
+import licence.meme.worrynot.util.MethodRenderCustomView;
 
 public class ProfileActivity extends AppCompatActivity implements
-            HomeFragment.OnFragmentInteractionListener,
-            MethodManagerFragment.OnFragmentInteractionListener,
-            MethodContainerPopUpFragment.OnFragmentInteractionListener
-        {
+        HomeFragment.OnFragmentInteractionListener,
+        MethodManagerFragment.OnFragmentInteractionListener,
+        MethodContainerPopUpFragment.OnFragmentInteractionListener,
+        MethodsStoreFragment.OnFragmentInteractionListener
+{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -131,6 +135,7 @@ public class ProfileActivity extends AppCompatActivity implements
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -139,22 +144,22 @@ public class ProfileActivity extends AppCompatActivity implements
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-             switch (position) {
-                 case 0:
-                     Fragment homeFragment = new HomeFragment();
-                     return homeFragment;
-                 case 1:
-                     Fragment methodManagerFragment = new MethodManagerFragment();
-                     return methodManagerFragment;
-                 case 2:
-                     Fragment homeFragment2 = new HomeFragment();
-                     return homeFragment2;
-                 case 3:
-                     Fragment methodsContainer = new MethodContainerPopUpFragment();
-                     return methodsContainer;
-                 default:
-                     return null;
-             }
+            switch (position) {
+                case 0:
+                    Fragment homeFragment = new HomeFragment();
+                    return homeFragment;
+                case 1:
+                    Fragment methodsContainer = new MethodContainerPopUpFragment();
+                    return methodsContainer;
+                case 2:
+                    Fragment methodStoreFragment = new MethodsStoreFragment();
+                    return methodStoreFragment;
+                case 3:
+                    Fragment methodManagerFragment = new MethodManagerFragment();
+                    return methodManagerFragment;
+                default:
+                    return null;
+            }
         }
 
         @Override

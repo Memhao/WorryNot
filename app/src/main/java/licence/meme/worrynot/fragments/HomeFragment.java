@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +25,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
@@ -31,7 +38,9 @@ import licence.meme.worrynot.models.Info;
 import licence.meme.worrynot.models.LiveInDayTightCompartmentsMethod;
 import licence.meme.worrynot.models.Metadata;
 import licence.meme.worrynot.models.Method;
+import licence.meme.worrynot.models.MethodChangedEvent;
 import licence.meme.worrynot.models.User;
+import licence.meme.worrynot.util.MethodRenderCustomView;
 import licence.meme.worrynot.util.Utils;
 
 /**
@@ -48,6 +57,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = HomeFragment.class.getSimpleName() ;
+    private static final String TAG_FRAGMENT = "HOME_FRAGMENT" ;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,10 +69,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private Button mInfoButton;
     private Button mChangePasswordButton;
     private Button mLogoutButton;
+
+
     private CircleImageView mAvatarImageView;
     private ProgressBar mExperienceProgressBar;
     private TextView mUserNameTextView;
 
+
+    private Button mSubmitButton;
+    private Method mReceivedMethod;
+    private EventBus bus;
+
+
+    private View mFragmentView;
+    private LayoutInflater mInflater;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -98,20 +118,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View return_view = inflater.inflate(R.layout.fragment_home, container, false);
-        mMenuHomeButton = (Button)return_view.findViewById(R.id.menu_home_fragment_btn);
+//        View return_view = inflater.inflate(R.layout.fragment_home, container, false);
+        bus = EventBus.getDefault();
+        if(!bus.isRegistered(this)){
+            bus.register(this);
+        }
+
+        mInflater=inflater;
+        mFragmentView = inflater.inflate(R.layout.fragment_home, container, false);
+        mMenuHomeButton = (Button)mFragmentView.findViewById(R.id.menu_home_fragment_btn);
         mMenuHomeButton.setOnClickListener(this);
-        mInfoButton = (Button)return_view.findViewById(R.id.info_fragment_btn);
-        mChangePasswordButton = (Button)return_view.findViewById(R.id.change_password_fragment_btn);
-        mLogoutButton = (Button)return_view.findViewById(R.id.logout_fragment_btn);
+        mInfoButton = (Button)mFragmentView.findViewById(R.id.info_fragment_btn);
+        mChangePasswordButton = (Button)mFragmentView.findViewById(R.id.change_password_fragment_btn);
+        mLogoutButton = (Button)mFragmentView.findViewById(R.id.logout_fragment_btn);
+        mSubmitButton = (Button)mFragmentView.findViewById(R.id.submit_home_fragment_btn);
         mInfoButton.setVisibility(View.GONE);
         mChangePasswordButton.setVisibility(View.GONE);
         mLogoutButton.setVisibility(View.GONE);
         mLogoutButton.setOnClickListener(this);
+        mInfoButton.setOnClickListener(this);
 
-        mAvatarImageView = (CircleImageView) return_view.findViewById(R.id.avatar_home_fragment_iv);
-        mUserNameTextView = (TextView)return_view.findViewById(R.id.name_home_fragment_tv);
-        mExperienceProgressBar = (ProgressBar)return_view.findViewById(R.id.experience_bar_home_fragment_pb);
+        mAvatarImageView = (CircleImageView) mFragmentView.findViewById(R.id.avatar_home_fragment_iv);
+        mUserNameTextView = (TextView)mFragmentView.findViewById(R.id.name_home_fragment_tv);
+        mExperienceProgressBar = (ProgressBar)mFragmentView.findViewById(R.id.experience_bar_home_fragment_pb);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("users/"+uid);
@@ -130,16 +159,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        if(mReceivedMethod == null){
+            LiveInDayTightCompartmentsMethod mtd = new LiveInDayTightCompartmentsMethod();
+            Metadata metedata = new Metadata(mtd.getAuthor(),mtd.getDescription(),mtd.getName());
+            Info info = new Info(mtd.getStory(),mtd.getSteps());
+            Method method = new Method(metedata,info);
+            LinearLayout linearLayout = method.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
+        }else {
+            mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
+            mReceivedMethod.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
+        }
 
 
-        LiveInDayTightCompartmentsMethod mtd = new LiveInDayTightCompartmentsMethod();
-        Metadata metedata = new Metadata(mtd.getAuthor(),mtd.getDescription(),mtd.getName());
-        Info info = new Info(mtd.getStory(),mtd.getSteps());
-        Method method = new Method(metedata,info);
-        LinearLayout linearLayout = method.drawMethod(return_view.getContext(), inflater, return_view);
+//        LinearLayout linearLayout = mReceivedMethod.drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
 
-
-        return return_view;
+        Log.e(TAG,"--------------------------\n");
+        return mFragmentView;
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MethodChangedEvent event) {
+        Toast.makeText(getActivity(), event.getMethod().getMetadata().getName(), Toast.LENGTH_SHORT).show();
+        mReceivedMethod = event.getMethod();
+        mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
+//        LinearLayout linearLayout = event.getMethod().drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -184,11 +226,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(new Intent(getContext(), MainActivity.class));
                 getActivity().finish();
                 break;
+            case R.id.info_fragment_btn:
+//                MethodContainerPopUpFragment methodContainerPopUpFragment = new MethodContainerPopUpFragment();
+//                FragmentManager fragmentManager = this.getFragmentManager();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.main_content, methodContainerPopUpFragment, methodContainerPopUpFragment.getTagFragment())
+//                        .addToBackStack(null)
+//                        .commit();
+                break;
             default:
                 break;
         }
     }
-
+    public String getTagFragment(){
+        return TAG_FRAGMENT;
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -203,4 +255,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

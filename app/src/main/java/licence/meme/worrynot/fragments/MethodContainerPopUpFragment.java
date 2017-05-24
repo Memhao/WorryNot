@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.Method;
+import licence.meme.worrynot.models.MethodChangedEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +30,7 @@ import licence.meme.worrynot.models.Method;
  * Use the {@link MethodContainerPopUpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MethodContainerPopUpFragment extends DialogFragment {
+public class MethodContainerPopUpFragment extends DialogFragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,15 +39,19 @@ public class MethodContainerPopUpFragment extends DialogFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private static final String TAG_FRAGMENT = "METHOD_CONTAINER_POP_UP_FRAGMENT" ;
     private OnFragmentInteractionListener mListener;
     private ListView mListView;
     private Button mSelectedButton;
     private FirebaseService mFireBFirebaseService;
+    private Method mCurrentMethod;
+
     public MethodContainerPopUpFragment() {
         // Required empty public constructor
     }
-
+    public String getTagFragment(){
+        return TAG_FRAGMENT;
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -79,14 +88,17 @@ public class MethodContainerPopUpFragment extends DialogFragment {
         mListView =(ListView) return_view.findViewById(R.id.list_fragment_methods_container_lv);
         mSelectedButton = (Button)return_view.findViewById(R.id.cancel_fragment_methods_container_btn);
         mFireBFirebaseService.populateMethodsContainer(mListView,return_view.getContext());
+        mCurrentMethod = null;
         mListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mCurrentMethod = null;
                 Method method = (Method)parent.getItemAtPosition(position);
-
+                mCurrentMethod = method;
                 mSelectedButton.setText(method.getMetadata().getName());
             }
         });
+        mSelectedButton.setOnClickListener(this);
         return return_view;
     }
 
@@ -116,6 +128,19 @@ public class MethodContainerPopUpFragment extends DialogFragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.cancel_fragment_methods_container_btn:
+                EventBus bus = EventBus.getDefault();
+                bus.post(new MethodChangedEvent(mCurrentMethod));
+                break;
+            default:break;
+        }
+
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -130,4 +155,6 @@ public class MethodContainerPopUpFragment extends DialogFragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
