@@ -1,6 +1,7 @@
 package licence.meme.worrynot.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -9,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-
-import java.util.List;
 
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.Method;
-import licence.meme.worrynot.models.MethodAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +37,8 @@ public class MethodContainerPopUpFragment extends DialogFragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView mListView;
+    private Button mSelectedButton;
+    private FirebaseService mFireBFirebaseService;
     public MethodContainerPopUpFragment() {
         // Required empty public constructor
     }
@@ -74,9 +75,18 @@ public class MethodContainerPopUpFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View return_view = inflater.inflate(R.layout.fragment_method_container_pop_up, container, false);
-        mListView =(ListView) return_view.findViewById(R.id.list_methods_container_lv);
+        mFireBFirebaseService = FirebaseService.getInstance();
+        mListView =(ListView) return_view.findViewById(R.id.list_fragment_methods_container_lv);
+        mSelectedButton = (Button)return_view.findViewById(R.id.cancel_fragment_methods_container_btn);
+        mFireBFirebaseService.populateMethodsContainer(mListView,return_view.getContext());
+        mListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Method method = (Method)parent.getItemAtPosition(position);
 
-        FirebaseService.getInstance().populateMethodsContainer(mListView,return_view.getContext());
+                mSelectedButton.setText(method.getMetadata().getName());
+            }
+        });
         return return_view;
     }
 

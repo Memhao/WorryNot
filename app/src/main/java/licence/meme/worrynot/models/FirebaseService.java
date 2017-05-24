@@ -106,11 +106,11 @@ public class FirebaseService {
         return  methods;
     }
     private class MethodsValueEventListener implements ValueEventListener{
-        private List<Method> methods;
+        private List<Method> mMethods;
         private ListView mListView;
         private Context mContext;
         public MethodsValueEventListener(ListView listView,Context context){
-            methods = new ArrayList<>();
+            mMethods = new ArrayList<>();
             mListView = listView;
             mContext = context;
         }
@@ -119,11 +119,11 @@ public class FirebaseService {
             Iterable<DataSnapshot> children  = dataSnapshot.getChildren();
             for(DataSnapshot child:children){
                 Method method = child.getValue(Method.class);
-                methods.add(method);
+                mMethods.add(method);
                 Log.e(TAG,"Methods lendth is :" + "Method 1 name is: "+ method.getMetadata().getAuthor());
             }
             //Build Adapter
-            MethodAdapter methodAdapter = new MethodAdapter(mContext, R.layout.row_method,methods);
+            MethodAdapter methodAdapter = new MethodAdapter(mContext, R.layout.row_method,mMethods);
 
             //Configure the list view
             mListView.setAdapter(methodAdapter);
@@ -134,10 +134,10 @@ public class FirebaseService {
 
         }
         public  List<Method> getMethods(){
-            return methods;
+            return mMethods;
         }
         public int getMethodsSize(){
-            return methods.size();
+            return mMethods.size();
         }
     }
     private boolean validatePassword(String password) {
