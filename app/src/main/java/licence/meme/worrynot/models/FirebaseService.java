@@ -20,7 +20,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -177,9 +176,8 @@ public class FirebaseService {
      * @param progressBar
      */
     public void updateUserHomeInfo(final CircleImageView avatarImageView, final TextView userNameTextView, final ProgressBar progressBar){
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("users/"+uid);
+        String uid = mFirebaseUser.getUid();
+        DatabaseReference ref = mFirebaseDatabase.getReference("users/"+uid);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -196,12 +194,66 @@ public class FirebaseService {
         });
     }
 
+    /**
+     * Use for download a certain method given as parameter
+     * @param context is used for feedback
+     * @param method
+     */
+    public void downloadMethod(final Activity context,final Method method){
+        mDatabaseReference.child("methods").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children  = dataSnapshot.getChildren();
+                for(DataSnapshot child:children){
+                    Method cMethod = child.getValue(Method.class);
+                    if(cMethod.equals(method)){
+                        String uid = mFirebaseUser.getUid();
+                        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("user_methods");
+                        usersDatabaseReference.push().setValue(method);
+                        Toast.makeText(context,"Download succeed, please check your WorryNot list ",Toast.LENGTH_SHORT).show();
+                        break;
+                    }else{
 
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context,"Download fail, please try again",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    /**
+     * This method is used for upload a method created by user
+     * @param context
+     * @param method
+     */
+    public  void  uploadMethod(final Activity context, final Method method){
+        mDatabaseReference.child("methods").push().setValue(method);
+        Toast.makeText(context,"Worry Not successfully added to the world ",Toast.LENGTH_SHORT).show();
 
+    }
 
+    /**
+     * This method is use to create a worry not and add to the current user list only
+     * @param context
+     * @param method
+     */
+    public void  createMethod(final Activity context, final Method method){
+        String uid = mFirebaseUser.getUid();
+        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("user_methods");
+        usersDatabaseReference.push().setValue(method);
+        Toast.makeText(context,"Worry Not successfully added to your bucket",Toast.LENGTH_SHORT).show();
+    }
 
+    public void setMethodAvailable(final Activity context, final Method method){
+
+    }
+    public void getMethodAvailable(final Activity context, final Method method){
+
+    }
     /**
      * This method is used to populate and update in real time listView given as parameter within the context with WorryNots from "methods" section from database
      *
