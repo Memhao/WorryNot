@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,19 +29,24 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.activities.MainActivity;
 import licence.meme.worrynot.activities.ProfileActivity;
 import licence.meme.worrynot.licence.meme.worrynot.Levels;
+import licence.meme.worrynot.util.Utils;
 
 public class FirebaseService {
     private  FirebaseAuth mFirebaseAuth;
     private  FirebaseDatabase mFirebaseDatabase;
+    private  FirebaseUser mFirebaseUser;
     private  DatabaseReference mDatabaseReference;
     private static final String TAG = FirebaseService.class.getSimpleName();
     private FirebaseService(){
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
     }
     private static FirebaseService instance;
 
@@ -48,8 +57,15 @@ public class FirebaseService {
         return  instance;
     }
 
-
-
+    /**
+     *  This method is used for sign up a new user If sign up succeed Profile Activity is launched
+     *
+     * @param context
+     * @param email
+     * @param password
+     * @param username
+     * @param image
+     */
     public  void signUp(final Activity context,final String email, final String password, final String username, final String image){
         mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
@@ -69,7 +85,7 @@ public class FirebaseService {
                     }
                 });
     }
-    public void addUserToDatabase(User user) {
+    private void addUserToDatabase(User user) {
 
         String uid = mFirebaseAuth.getCurrentUser().getUid(); // for security reason maybe you should use push instead of getUid
         DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
@@ -80,6 +96,14 @@ public class FirebaseService {
 
     }
 
+
+    /**
+     * This method is used for login a user that already has an account If succeed ProfileActivity is launched
+     *
+     * @param context
+     * @param email
+     * @param password
+     */
     public void loginUser(final Activity context,String email, final String password) {
         mFirebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
             @Override
@@ -97,6 +121,94 @@ public class FirebaseService {
             }
         });
     }
+
+    /**
+     * Logout current user and turn back to MainActivity if succeed
+     *
+     * @param fragment
+     */
+    public void logout(final Fragment fragment){
+        mFirebaseAuth.signOut();
+        if(mFirebaseAuth == null) {
+            fragment.startActivity(new Intent(fragment.getContext(), MainActivity.class));
+            fragment.getActivity().finish();
+        }
+    }
+
+    /**
+     * This method is used to change password
+     *
+     * @param context  ChangePasswordActivity
+     * @param newPassword
+     */
+    public void changePassword(final Activity context , String newPassword){
+        mFirebaseUser.updatePassword(newPassword).addOnCompleteListener(context, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(context,"Password successfully changed",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * This method is used to reset password
+     *
+     * @param context ResetPasswordActivity
+     * @param email to send your request for reset the password
+     */
+    public void resetPassword(final Activity context, String email ){
+        mFirebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(context, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(context,"Email sent. Please check your inbox ",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * This method is used to update  basic info for current user
+     *
+     * @param avatarImageView
+     * @param userNameTextView
+     * @param progressBar
+     */
+    public void updateUserHomeInfo(final CircleImageView avatarImageView, final TextView userNameTextView, final ProgressBar progressBar){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users/"+uid);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                avatarImageView.setImageBitmap(Utils.decodeFromFirebaseBase64(user.getImage()));
+                userNameTextView.setText(user.getUsername());
+                progressBar.setProgress(user.getExperience());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG,"Fail database");
+            }
+        });
+    }
+
+
+
+
+
+
+
+    /**
+     * This method is used to populate and update in real time listView given as parameter within the context with WorryNots from "methods" section from database
+     *
+     * @param listView
+     * @param context
+     * @return List with all methods created by all users
+     */
     public List<Method> populateMethodsContainer(ListView listView,Context context){
         List<Method> methods = new ArrayList<Method>();
         final MethodsValueEventListener methodsValueEventListener = new MethodsValueEventListener( listView, context);
@@ -105,6 +217,7 @@ public class FirebaseService {
 
         return  methods;
     }
+
     private class MethodsValueEventListener implements ValueEventListener{
         private List<Method> mMethods;
         private ListView mListView;
@@ -140,6 +253,7 @@ public class FirebaseService {
             return mMethods.size();
         }
     }
+
     private boolean validatePassword(String password) {
         if(password == null || password.length()<6)
             return false;

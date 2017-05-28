@@ -39,6 +39,7 @@ import licence.meme.worrynot.models.LiveInDayTightCompartmentsMethod;
 import licence.meme.worrynot.models.Metadata;
 import licence.meme.worrynot.models.Method;
 import licence.meme.worrynot.models.MethodChangedEvent;
+import licence.meme.worrynot.models.MethodRender;
 import licence.meme.worrynot.models.User;
 import licence.meme.worrynot.util.MethodRenderCustomView;
 import licence.meme.worrynot.util.Utils;
@@ -164,10 +165,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             Metadata metedata = new Metadata(mtd.getAuthor(),mtd.getDescription(),mtd.getName());
             Info info = new Info(mtd.getStory(),mtd.getSteps());
             Method method = new Method(metedata,info);
-            LinearLayout linearLayout = method.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
+            MethodRender methodRender = new MethodRender(method);
+            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
+//            LinearLayout linearLayout = method.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
         }else {
             mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
-            mReceivedMethod.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
+            MethodRender methodRender = new MethodRender(mReceivedMethod);
+            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
+//            mReceivedMethod.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
         }
 
 

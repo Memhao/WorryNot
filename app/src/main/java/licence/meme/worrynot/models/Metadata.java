@@ -8,7 +8,7 @@ public class Metadata {
     private String author;
     private String description;
     private String name;
-
+    private int rating;
 
     public Metadata(String author, String description, String name) {
         this.author = author;
@@ -43,6 +43,14 @@ public class Metadata {
         this.name = name;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,6 +58,7 @@ public class Metadata {
 
         Metadata metadata = (Metadata) o;
 
+        if (rating != metadata.rating) return false;
         if (author != null ? !author.equals(metadata.author) : metadata.author != null)
             return false;
         if (description != null ? !description.equals(metadata.description) : metadata.description != null)
@@ -63,6 +72,7 @@ public class Metadata {
         int result = author != null ? author.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + rating;
         return result;
     }
 }
