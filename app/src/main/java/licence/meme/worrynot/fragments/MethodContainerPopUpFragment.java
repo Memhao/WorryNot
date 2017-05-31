@@ -132,8 +132,9 @@ public class MethodContainerPopUpFragment extends DialogFragment implements View
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.cancel_fragment_methods_container_btn:
-                EventBus bus = EventBus.getDefault();
-                bus.post(new MethodChangedEvent(mCurrentMethod));
+//                EventBus bus = EventBus.getDefault();
+//                bus.post(new MethodChangedEvent(mCurrentMethod));
+                FirebaseService.getInstance().setActiveMethod(getActivity(),mCurrentMethod);
                 break;
             default:break;
         }

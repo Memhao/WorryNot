@@ -159,14 +159,14 @@ public class ProfileActivity extends AppCompatActivity implements
                     Fragment homeFragment = new HomeFragment();
                     return homeFragment;
                 case 1:
-                    Fragment methodsContainer = new MethodContainerPopUpFragment();
-                    return methodsContainer;
+                    Fragment methodManagerFragment = new MethodManagerFragment();
+                    return methodManagerFragment;
                 case 2:
                     Fragment methodStoreFragment = new MethodsStoreFragment();
                     return methodStoreFragment;
                 case 3:
-                    Fragment methodManagerFragment = new MethodManagerFragment();
-                    return methodManagerFragment;
+                    Fragment methodsContainer = new MethodContainerPopUpFragment();
+                    return methodsContainer;
                 default:
                     return null;
             }

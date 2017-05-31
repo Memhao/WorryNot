@@ -14,21 +14,21 @@ import java.util.List;
 import java.util.Set;
 
 
- public class User {
+public class User {
     private String username;
     private String email;
     private String image;
     private int experience;
     private int level;
     private List<Method> methods = new ArrayList<>();//in ordinea in care le bag
-
+    private Method activeMethod;
     public static User getFirebaseUserInstance(String uid){
         final User user[] = {null};
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                  user[0] = dataSnapshot.getValue(User.class);
+                user[0] = dataSnapshot.getValue(User.class);
             }
 
             @Override
@@ -50,60 +50,69 @@ import java.util.Set;
     }
 
     public void addMethod(Method method){
-         methods.add(method);
+        methods.add(method);
     }
     public void removeMethod(Method method){
         methods.remove(method);
     }
 
-     public String getUsername() {
-         return username;
-     }
+    public String getUsername() {
+        return username;
+    }
 
-     public void setUsername(String username) {
-         this.username = username;
-     }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-     public String getEmail() {
-         return email;
-     }
+    public String getEmail() {
+        return email;
+    }
 
-     public void setEmail(String email) {
-         this.email = email;
-     }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-     public String getImage() {
-         return image;
-     }
+    public String getImage() {
+        return image;
+    }
 
-     public void setImage(String image) {
-         this.image = image;
-     }
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-     public int getExperience() {
-         return experience;
-     }
+    public int getExperience() {
+        return experience;
+    }
 
-     public void setExperience(int experience) {
-         this.experience = experience;
-     }
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
 
-     public int getLevel() {
-         return level;
-     }
+    public int getLevel() {
+        return level;
+    }
 
-     public void setLevel(int level) {
-         this.level = level;
-     }
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
-     public List<Method> getMethods() {
-         return methods;
-     }
+    public List<Method> getMethods() {
+        return methods;
+    }
 
-     public void setMethods(List<Method> methods) {
-         this.methods = methods;
-     }
-     public void updateExperience(List<Double> ratings){
+    public void setMethods(List<Method> methods) {
+        this.methods = methods;
+    }
+
+    public Method getActiveMethod() {
+        return activeMethod;
+    }
+
+    public void setActiveMethod(Method activeMethod) {
+        this.activeMethod = activeMethod;
+    }
+
+    public void updateExperience(List<Double> ratings){
         double experience = 0.0;
         for(double rating:ratings){
             experience+= rating;

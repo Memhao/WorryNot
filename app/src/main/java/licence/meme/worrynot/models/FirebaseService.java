@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,7 +15,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -71,15 +76,30 @@ public class FirebaseService {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(this.getClass().getSimpleName(), "createUserWithEmail:success");
-                            User user = new User(username,email,0,image);
-                            addUserToDatabase(user);
-                            context.startActivity(new Intent(context, ProfileActivity.class));
+
+                            mDatabaseReference.child("methods").child("-dfltmtd01").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Log.d(this.getClass().getSimpleName(), "createUserWithEmail:success");
+                                    User user = new User(username,email,0,image);
+                                    Method method = dataSnapshot.getValue(Method.class);
+                                    user.setActiveMethod(method);
+                                    user.addMethod(method);
+                                    addUserToDatabase(user);
+                                    context.startActivity(new Intent(context, ProfileActivity.class));
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
 
                         } else {
                             Log.e(this.getClass().getSimpleName(), "Fail auth", task.getException());
-                                        Toast.makeText(context, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -88,6 +108,7 @@ public class FirebaseService {
 
         String uid = mFirebaseAuth.getCurrentUser().getUid(); // for security reason maybe you should use push instead of getUid
         DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+
         usersDatabaseReference.setValue(user);
 
         DatabaseReference levelsDatabaseReference = FirebaseDatabase.getInstance().getReference().child("top").child(Levels.level_0).child("memebers");
@@ -168,6 +189,29 @@ public class FirebaseService {
         });
     }
 
+    public void changePassword(final Activity context, String email, String oldPassword, final String newPassword){
+        AuthCredential credential = EmailAuthProvider.getCredential(email,oldPassword);
+        mFirebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mFirebaseUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(context,"Password successfully changed ",Toast.LENGTH_LONG);
+                            } else {
+                                Toast.makeText(context,"Password does not changed Please try again :D ",Toast.LENGTH_LONG);
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(context,"Please try again :D ",Toast.LENGTH_LONG);
+                }
+            }
+        });
+    }
+
     /**
      * This method is used to update  basic info for current user
      *
@@ -243,17 +287,45 @@ public class FirebaseService {
      */
     public void  createMethod(final Activity context, final Method method){
         String uid = mFirebaseUser.getUid();
-        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("user_methods");
+        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("methods");
         usersDatabaseReference.push().setValue(method);
         Toast.makeText(context,"Worry Not successfully added to your bucket",Toast.LENGTH_SHORT).show();
     }
 
-    public void setMethodAvailable(final Activity context, final Method method){
+    public void setActiveMethod(final Activity context, final Method method){
+        String uid = mFirebaseUser.getUid();
+        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("activeMethod");
+        usersDatabaseReference.setValue(method);
+        Toast.makeText(context,"Method has been selected",Toast.LENGTH_SHORT).show();
+    }
+    public void getActiveMethod(final Context context, final LayoutInflater inflater, final View parentView){
+        String uid = mFirebaseUser.getUid();
+        DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Method method = dataSnapshot.getValue(Method.class);
+                MethodRender render = new MethodRender(method);
+                Log.e("[getActiveMethod]","_______ACTIVE METHOD________"+method.getMetadata().getName()+"_____________");
+
+                render.drawMethod(context,inflater,parentView);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG,"Fail database");
+            }
+        });
+    }
+
+    public void updateMethod(){
 
     }
-    public void getMethodAvailable(final Activity context, final Method method){
+
+    public void rateMethod(){
 
     }
+
     /**
      * This method is used to populate and update in real time listView given as parameter within the context with WorryNots from "methods" section from database
      *
@@ -261,14 +333,23 @@ public class FirebaseService {
      * @param context
      * @return List with all methods created by all users
      */
-    public List<Method> populateMethodsContainer(ListView listView,Context context){
-        List<Method> methods = new ArrayList<Method>();
+    public void populateMethodsContainer(ListView listView,Context context){
         final MethodsValueEventListener methodsValueEventListener = new MethodsValueEventListener( listView, context);
         mDatabaseReference.child("methods").addValueEventListener(methodsValueEventListener);
-        Log.e(TAG,"------" + "SIZE IS: "+ methods.size());
-
-        return  methods;
     }
+
+    /**
+     * This method is used to populate and update in real time listView given as parameter within the context with WorryNots from users' methods
+     *
+     * @param listView
+     * @param context
+     */
+    public void populateUserMethodsContainer(ListView listView, Context context){
+        String uid = mFirebaseUser.getUid();
+        final MethodsValueEventListener methodsValueEventListener = new MethodsValueEventListener( listView, context);
+        mDatabaseReference.child("users").child(uid).child("methods").addValueEventListener(methodsValueEventListener);
+    }
+
 
     private class MethodsValueEventListener implements ValueEventListener{
         private List<Method> mMethods;
@@ -305,6 +386,8 @@ public class FirebaseService {
             return mMethods.size();
         }
     }
+
+
 
     private boolean validatePassword(String password) {
         if(password == null || password.length()<6)

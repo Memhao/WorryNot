@@ -1,19 +1,23 @@
 package licence.meme.worrynot.activities;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.models.FirebaseService;
 
 public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mResetPasswordButton;
     private Button mBackButton;
+    private EditText mEmailEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +29,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
         mResetPasswordButton = (Button)findViewById(R.id.reset_forgot_password_activity_btn);
         mBackButton = (Button)findViewById(R.id.back_forgot_password_activity_btn);
-
+        mEmailEditText = (EditText)findViewById(R.id.email_forgot_password_activity_et);
         mResetPasswordButton.setOnClickListener(this);
         mBackButton.setOnClickListener(this);
 
@@ -34,7 +38,9 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.reset_forgot_password_activity_btn:break;
+            case R.id.reset_forgot_password_activity_btn:
+                FirebaseService.getInstance().resetPassword(this,mEmailEditText.getText().toString());
+                 break;
             case R.id.back_forgot_password_activity_btn:
                 startActivity(new Intent(ForgotPasswordActivity.this,MainActivity.class));
                 finish();

@@ -54,7 +54,7 @@ public class MethodRender {
         LinearLayout methodLinearLayout = (LinearLayout)parentView.findViewById(R.id.method_fragment_ll);
         FrameLayout frameLayout = (FrameLayout) inflater.inflate(R.layout.sample_method_render_custom_view, null, false);
         ConstraintLayout constraintLayout = (ConstraintLayout) frameLayout.getChildAt(0);
-
+        Log.e("[drawMethod]","_______DRAW METHOD________"+mMethod.getMetadata().getName()+"_____________");
         TextView nameTextView = (TextView)constraintLayout.getChildAt(0);
         nameTextView.setMovementMethod(new ScrollingMovementMethod());
         nameTextView.setTextColor(Color.parseColor("#AF5910"));
@@ -96,7 +96,7 @@ public class MethodRender {
          * Set Story
          */
         storyTextView.setText(mMethod.getInfo().getStory());
-
+        Log.e("TAG","____________-> STORY:"+nameTextView.getText().toString()+"");
 
         stepTextView.setText(steps.get(0));
         UpDownListener upDownListener = new UpDownListener(steps,stepTextView);
@@ -105,6 +105,7 @@ public class MethodRender {
 
 
         methodLinearLayout.addView(frameLayout);
+        Log.e("TAG","_______________"+mMethod.getMetadata().getName()+"_____ has been draw________");
 
     }
 

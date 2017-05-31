@@ -33,7 +33,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.activities.MainActivity;
+import licence.meme.worrynot.activities.ResetPasswordActivity;
 import licence.meme.worrynot.licence.meme.worrynot.method.CreateMethod;
+import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.Info;
 import licence.meme.worrynot.models.LiveInDayTightCompartmentsMethod;
 import licence.meme.worrynot.models.Metadata;
@@ -108,6 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG,"On Create\n");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -120,10 +123,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 //        View return_view = inflater.inflate(R.layout.fragment_home, container, false);
-        bus = EventBus.getDefault();
-        if(!bus.isRegistered(this)){
-            bus.register(this);
-        }
+        Log.e(TAG,"On Create View\n");
+//        bus = EventBus.getDefault();
+//        if(!bus.isRegistered(this)){
+//            bus.register(this);
+//        }
 
         mInflater=inflater;
         mFragmentView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -160,20 +164,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        if(mReceivedMethod == null){
-            LiveInDayTightCompartmentsMethod mtd = new LiveInDayTightCompartmentsMethod();
-            Metadata metedata = new Metadata(mtd.getAuthor(),mtd.getDescription(),mtd.getName());
-            Info info = new Info(mtd.getStory(),mtd.getSteps());
-            Method method = new Method(metedata,info);
-            MethodRender methodRender = new MethodRender(method);
-            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
-//            LinearLayout linearLayout = method.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
-        }else {
-            mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
-            MethodRender methodRender = new MethodRender(mReceivedMethod);
-            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
+//        if(mReceivedMethod == null){
+//            LiveInDayTightCompartmentsMethod mtd = new LiveInDayTightCompartmentsMethod();
+//            Metadata metedata = new Metadata(mtd.getAuthor(),mtd.getDescription(),mtd.getName());
+//            Info info = new Info(mtd.getStory(),mtd.getSteps());
+//            Method method = new Method(metedata,info);
+//            MethodRender methodRender = new MethodRender(method);
+//            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
+////            LinearLayout linearLayout = method.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
+//        }else {
+//            mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
+            FirebaseService firebaseService = FirebaseService.getInstance();
+            firebaseService.getActiveMethod(mFragmentView.getContext(),inflater,mFragmentView);
+//            MethodRender methodRender = new MethodRender(mReceivedMethod);
+//            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
 //            mReceivedMethod.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
-        }
+//        }
 
 
 //        LinearLayout linearLayout = mReceivedMethod.drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
@@ -181,13 +187,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Log.e(TAG,"--------------------------\n");
         return mFragmentView;
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MethodChangedEvent event) {
-        Toast.makeText(getActivity(), event.getMethod().getMetadata().getName(), Toast.LENGTH_SHORT).show();
-        mReceivedMethod = event.getMethod();
-        mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
-//        LinearLayout linearLayout = event.getMethod().drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(MethodChangedEvent event) {
+//        Toast.makeText(getActivity(), event.getMethod().getMetadata().getName(), Toast.LENGTH_SHORT).show();
+//        mReceivedMethod = event.getMethod();
+//        mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
+////        LinearLayout linearLayout = event.getMethod().drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -198,6 +204,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onAttach(Context context) {
+        Log.e(TAG,"On Attach\n");
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -209,6 +216,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onDetach() {
+        Log.e(TAG,"On Detach\n");
         super.onDetach();
         mListener = null;
     }
@@ -232,13 +240,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 getActivity().finish();
                 break;
             case R.id.info_fragment_btn:
-//                MethodContainerPopUpFragment methodContainerPopUpFragment = new MethodContainerPopUpFragment();
-//                FragmentManager fragmentManager = this.getFragmentManager();
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.main_content, methodContainerPopUpFragment, methodContainerPopUpFragment.getTagFragment())
-//                        .addToBackStack(null)
-//                        .commit();
+                FirebaseService firebaseService = FirebaseService.getInstance();
+                firebaseService.getActiveMethod(mFragmentView.getContext(),mInflater,mFragmentView);
                 break;
+            case R.id.change_password_fragment_btn:
+                startActivity(new Intent(getContext(), ResetPasswordActivity.class));
+                getActivity().finish();
             default:
                 break;
         }

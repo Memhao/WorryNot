@@ -5,7 +5,7 @@
          ?android:attr/buttonBarStyle is new as of API 11 so this is
          necessary to support previous API levels. -->
     <declare-styleable name="CustomRatingBar">
-        <attr name="customRatingBar" format="reference"/>
+        <attr name="customRatingBar" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="ButtonBarContainerTheme">
