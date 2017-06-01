@@ -11,12 +11,14 @@ import java.util.List;
 public class Info {
     private String story;
     private List<String> steps;
+    private List<String> questionnaire;
     public Info(){
 
     }
-    public Info(String story, List<String> steps) {
+    public Info(String story, List<String> steps, List<String> questionnaire) {
         this.story = story;
         this.steps = steps;
+        this.questionnaire = questionnaire;
     }
 
     @Override
@@ -27,7 +29,8 @@ public class Info {
         Info info = (Info) o;
 
         if (story != null ? !story.equals(info.story) : info.story != null) return false;
-        return steps != null ? steps.equals(info.steps) : info.steps == null;
+        if (steps != null ? !steps.equals(info.steps) : info.steps != null) return false;
+        return questionnaire != null ? questionnaire.equals(info.questionnaire) : info.questionnaire == null;
 
     }
 
@@ -35,6 +38,7 @@ public class Info {
     public int hashCode() {
         int result = story != null ? story.hashCode() : 0;
         result = 31 * result + (steps != null ? steps.hashCode() : 0);
+        result = 31 * result + (questionnaire != null ? questionnaire.hashCode() : 0);
         return result;
     }
 
@@ -50,8 +54,15 @@ public class Info {
         return steps;
     }
 
-
     public void setSteps(List<String> steps) {
         this.steps = steps;
+    }
+
+    public List<String> getQuestionnaire() {
+        return questionnaire;
+    }
+
+    public void setQuestionnaire(List<String> questionnaire) {
+        this.questionnaire = questionnaire;
     }
 }

@@ -77,7 +77,7 @@ public class FirebaseService {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            mDatabaseReference.child("methods").child("-dfltmtd01").addValueEventListener(new ValueEventListener() {
+                            mDatabaseReference.child("methods").child("-dfltmtd02").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Log.d(this.getClass().getSimpleName(), "createUserWithEmail:success");
@@ -155,22 +155,6 @@ public class FirebaseService {
         }
     }
 
-    /**
-     * This method is used to change password
-     *
-     * @param context  ChangePasswordActivity
-     * @param newPassword
-     */
-    public void changePassword(final Activity context , String newPassword){
-        mFirebaseUser.updatePassword(newPassword).addOnCompleteListener(context, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(context,"Password successfully changed",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 
     /**
      * This method is used to reset password
@@ -318,6 +302,14 @@ public class FirebaseService {
         });
     }
 
+
+    public void populateQuestionnaire(ListView listView,Context context, Score score){
+        String uid = mFirebaseUser.getUid();
+        final QuestionnaireActiveMethodValueEventListener questionnaireActiveMethodValueEventListener = new QuestionnaireActiveMethodValueEventListener( listView, context,score);
+        mDatabaseReference.child("users").child(uid).child("activeMethod").addValueEventListener(questionnaireActiveMethodValueEventListener);
+    }
+
+
     public void updateMethod(){
 
     }
@@ -388,6 +380,29 @@ public class FirebaseService {
     }
 
 
+    private class QuestionnaireActiveMethodValueEventListener implements ValueEventListener{
+        private ListView mListView;
+        private Context mContext;
+        private Score score;
+        public QuestionnaireActiveMethodValueEventListener(ListView mListView, Context mContext,Score score) {
+            this.mListView = mListView;
+            this.mContext = mContext;
+            this.score = score;
+        }
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Method method = dataSnapshot.getValue(Method.class);
+            List<String> questionnaire = method.getInfo().getQuestionnaire();
+            QuestionAdapter questionAdapter = new QuestionAdapter(mContext,questionnaire,score);
+            mListView.setAdapter(questionAdapter);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    }
 
     private boolean validatePassword(String password) {
         if(password == null || password.length()<6)

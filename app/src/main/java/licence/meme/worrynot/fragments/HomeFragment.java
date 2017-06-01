@@ -5,19 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,23 +22,15 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.activities.MainActivity;
+import licence.meme.worrynot.activities.QuestionnaireActivity;
 import licence.meme.worrynot.activities.ResetPasswordActivity;
-import licence.meme.worrynot.licence.meme.worrynot.method.CreateMethod;
 import licence.meme.worrynot.models.FirebaseService;
-import licence.meme.worrynot.models.Info;
-import licence.meme.worrynot.models.LiveInDayTightCompartmentsMethod;
-import licence.meme.worrynot.models.Metadata;
 import licence.meme.worrynot.models.Method;
-import licence.meme.worrynot.models.MethodChangedEvent;
-import licence.meme.worrynot.models.MethodRender;
 import licence.meme.worrynot.models.User;
-import licence.meme.worrynot.util.MethodRenderCustomView;
 import licence.meme.worrynot.util.Utils;
 
 /**
@@ -79,7 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private TextView mUserNameTextView;
 
 
-    private Button mSubmitButton;
+    private Button mEvaluateButton;
     private Method mReceivedMethod;
     private EventBus bus;
 
@@ -136,13 +123,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mInfoButton = (Button)mFragmentView.findViewById(R.id.info_fragment_btn);
         mChangePasswordButton = (Button)mFragmentView.findViewById(R.id.change_password_fragment_btn);
         mLogoutButton = (Button)mFragmentView.findViewById(R.id.logout_fragment_btn);
-        mSubmitButton = (Button)mFragmentView.findViewById(R.id.submit_home_fragment_btn);
+        mEvaluateButton = (Button)mFragmentView.findViewById(R.id.evaluate_home_fragment_btn);
         mInfoButton.setVisibility(View.GONE);
         mChangePasswordButton.setVisibility(View.GONE);
         mLogoutButton.setVisibility(View.GONE);
         mLogoutButton.setOnClickListener(this);
         mInfoButton.setOnClickListener(this);
-
+        mEvaluateButton.setOnClickListener(this);
         mAvatarImageView = (CircleImageView) mFragmentView.findViewById(R.id.avatar_home_fragment_iv);
         mUserNameTextView = (TextView)mFragmentView.findViewById(R.id.name_home_fragment_tv);
         mExperienceProgressBar = (ProgressBar)mFragmentView.findViewById(R.id.experience_bar_home_fragment_pb);
@@ -173,7 +160,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 //            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
 ////            LinearLayout linearLayout = method.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
 //        }else {
-//            mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
+//            mEvaluateButton.setText( mReceivedMethod.getMetadata().getName());
             FirebaseService firebaseService = FirebaseService.getInstance();
             firebaseService.getActiveMethod(mFragmentView.getContext(),inflater,mFragmentView);
 //            MethodRender methodRender = new MethodRender(mReceivedMethod);
@@ -191,7 +178,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 //    public void onMessageEvent(MethodChangedEvent event) {
 //        Toast.makeText(getActivity(), event.getMethod().getMetadata().getName(), Toast.LENGTH_SHORT).show();
 //        mReceivedMethod = event.getMethod();
-//        mSubmitButton.setText( mReceivedMethod.getMetadata().getName());
+//        mEvaluateButton.setText( mReceivedMethod.getMetadata().getName());
 ////        LinearLayout linearLayout = event.getMethod().drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
 //    }
 
@@ -229,6 +216,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.evaluate_home_fragment_btn:
+                startActivity(new Intent(getContext(), QuestionnaireActivity.class));
+                getActivity().finish();
+                break;
             case R.id.menu_home_fragment_btn:
                 toggleView(mInfoButton);
                 toggleView(mLogoutButton);
@@ -246,6 +237,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             case R.id.change_password_fragment_btn:
                 startActivity(new Intent(getContext(), ResetPasswordActivity.class));
                 getActivity().finish();
+                break;
             default:
                 break;
         }
