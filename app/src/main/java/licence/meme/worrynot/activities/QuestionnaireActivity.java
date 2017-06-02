@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.models.ExperienceManager;
 import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.QuestionnaireRender;
 import licence.meme.worrynot.models.Score;
@@ -24,15 +25,23 @@ import licence.meme.worrynot.models.Score;
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mSubmitButton;
+    private Button mBackButton;
     private ListView mQuestionnaireListView;
     private Score mScore;
+    private ExperienceManager experienceManager;
+    private boolean pressed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
         mSubmitButton = (Button)findViewById(R.id.submit_questionnaire_activity_btn);
+        mBackButton = (Button)findViewById(R.id.back_questionnaire_activity_btn);
         mQuestionnaireListView = (ListView)findViewById(R.id.questions_activity_questionnaire_lv);
+        experienceManager = new ExperienceManager();
         mSubmitButton.setOnClickListener(this);
+        mBackButton.setOnClickListener(this);
+        pressed = false;
+
         mScore = Score.getInstance();
         FirebaseService.getInstance().populateQuestionnaire(mQuestionnaireListView,this,mScore);
     }
@@ -43,16 +52,24 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             case R.id.submit_questionnaire_activity_btn:
                 for(Map.Entry entry:mScore.getScore().entrySet() )
                  Log.e("QuestionnaireActiviy","SCORE:"+entry.getValue());
-                //pop up are you sure ?
-                createYesNoDialog(this);
-                //if yes then compute score and bring results from database
-
-                 // here compute the experience :D then the score
-//                startActivity(new Intent(this, ProfileActivity.class));
-//                finish();
+                 createYesNoDialog(this);
             break;
+            case R.id.back_questionnaire_activity_btn:
+                    startActivity(new Intent(this,ProfileActivity.class));
+                    finish();
+                break;
             default:break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(pressed){
+            experienceManager.increaseExperience(50.0f);
+            experienceManager.persistExperience();
+        }
+
     }
 
     private void createYesNoDialog(final Activity activity) {
@@ -65,8 +82,8 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
             public void onClick(DialogInterface dialog, int which) {
                 int score = (int)computeScore();
                 Log.e("QuestionnaireActivity", "ComputedScore:"+score);
+                pressed = true;
                 FirebaseService.getInstance().popUpAdvice(score,activity);
-
             }
 
             private float computeScore() {
@@ -87,4 +104,6 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         });
         alertYesNoDialog.create().show();
     }
+
+
 }

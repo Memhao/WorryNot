@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@drawable/background_rectangle"
     tools:context="licence.meme.worrynot.activities.ResultPopUpActivity">
     <TextView
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="#8c8800"
         android:textColor="#111111"
@@ -20,7 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/title_result_pop_up_activity_tv" />
     <TextView
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="400dp"
         android:background="#c0ca33"
         android:textColor="#111111"

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -343,6 +344,11 @@ public class FirebaseService {
         mDatabaseReference.child("users").child(uid).child("methods").addValueEventListener(methodsValueEventListener);
     }
 
+    /**
+     * This method gives feedback to user depending on score obtained for questionnaire
+     * @param score
+     * @param activity
+     */
     public void popUpAdvice(int score, final Activity activity) {
         Log.e("FireBaseService","----SCORE:"+score);
         String uid = mFirebaseUser.getUid();
@@ -407,7 +413,6 @@ public class FirebaseService {
         }
 
     }
-
 
     private class MethodsValueEventListener implements ValueEventListener{
         private List<Method> mMethods;
