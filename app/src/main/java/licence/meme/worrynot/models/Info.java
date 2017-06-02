@@ -1,6 +1,7 @@
 package licence.meme.worrynot.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,13 +13,15 @@ public class Info {
     private String story;
     private List<String> steps;
     private List<String> questionnaire;
+    private HashMap<String,String> results;
     public Info(){
 
     }
-    public Info(String story, List<String> steps, List<String> questionnaire) {
+    public Info(String story, List<String> steps, List<String> questionnaire, HashMap<String ,String> results) {
         this.story = story;
         this.steps = steps;
         this.questionnaire = questionnaire;
+        this.results = results;
     }
 
     @Override
@@ -64,5 +67,13 @@ public class Info {
 
     public void setQuestionnaire(List<String> questionnaire) {
         this.questionnaire = questionnaire;
+    }
+
+    public HashMap<String, String> getResults() {
+        return results;
+    }
+
+    public void setResults(HashMap<String, String> results) {
+        this.results = results;
     }
 }

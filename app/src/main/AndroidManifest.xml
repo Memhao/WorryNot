@@ -78,7 +78,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".activities.QuestionnaireActivity"></activity>
+        <activity android:name=".activities.QuestionnaireActivity" />
+        <activity android:name=".activities.ResultPopUpActivity"
+                  android:theme="@style/AppTheme.PopUpTheme"
+            ></activity>
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@
 <TextView
     android:layout_width="300dp"
     android:layout_height="50dp"
-    android:background="@drawable/et1"
+    android:background="@color/colorPrimaryDark"
 
     app:layout_constraintTop_toTopOf="parent"
     android:layout_marginTop="8dp"
@@ -22,9 +22,9 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/submit_questionnaire_activity_btn"
-        android:background="@drawable/button0"
+        android:background="@color/colorPrimaryDark"
         android:text="SUBMIT"
-        android:textColor="#EEE786"
+        android:textColor="#000000"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/questions_activity_questionnaire_lv"
         android:layout_marginLeft="8dp"

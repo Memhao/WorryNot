@@ -37,6 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.activities.MainActivity;
 import licence.meme.worrynot.activities.ProfileActivity;
+import licence.meme.worrynot.activities.ResultPopUpActivity;
 import licence.meme.worrynot.licence.meme.worrynot.Levels;
 import licence.meme.worrynot.util.Utils;
 
@@ -340,6 +341,71 @@ public class FirebaseService {
         String uid = mFirebaseUser.getUid();
         final MethodsValueEventListener methodsValueEventListener = new MethodsValueEventListener( listView, context);
         mDatabaseReference.child("users").child(uid).child("methods").addValueEventListener(methodsValueEventListener);
+    }
+
+    public void popUpAdvice(int score, final Activity activity) {
+        Log.e("FireBaseService","----SCORE:"+score);
+        String uid = mFirebaseUser.getUid();
+        DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");
+        if(score<3){
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Method method = dataSnapshot.getValue(Method.class);
+                    String result = method.getInfo().getResults().get("low");
+                    Log.e("FireBaseService","----RESULT FROM FIREBASE <3 :"+ result );
+                    Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
+                    final String TAG_TRANSFER = "RESULT";
+                    toResultPopUpActivityIntent.putExtra(TAG_TRANSFER,result);
+                    activity.startActivity(toResultPopUpActivityIntent);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            //bring in results low from database into a pop up window
+        }else if(score>3){
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Method method = dataSnapshot.getValue(Method.class);
+                    String result = method.getInfo().getResults().get("high");
+                    Log.e("FireBaseService","----RESULT FROM FIREBASE >3 :"+ result);
+                    Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
+                    final String TAG_TRANSFER = "RESULT";
+                    toResultPopUpActivityIntent.putExtra(TAG_TRANSFER,result);
+                    activity.startActivity(toResultPopUpActivityIntent);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            //bring in results high from database
+        }else{
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Method method = dataSnapshot.getValue(Method.class);
+                    String result = method.getInfo().getResults().get("medium");
+                    Log.e("FireBaseService","----RESULT FROM FIREBASE =3 :"+ result);
+                    Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
+                    final String TAG_TRANSFER = "RESULT";
+                    toResultPopUpActivityIntent.putExtra(TAG_TRANSFER,result);
+                    activity.startActivity(toResultPopUpActivityIntent);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            //bring in results medium from database
+        }
+
     }
 
 
