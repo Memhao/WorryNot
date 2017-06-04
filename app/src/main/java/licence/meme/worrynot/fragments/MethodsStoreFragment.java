@@ -1,14 +1,24 @@
 package licence.meme.worrynot.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.activities.MethodDetailsActivity;
+import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
+import licence.meme.worrynot.models.RecycleViewItem;
+import licence.meme.worrynot.models.RecycleViewMethodsData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,18 +28,23 @@ import licence.meme.worrynot.R;
  * Use the {@link MethodsStoreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MethodsStoreFragment extends Fragment {
+public class MethodsStoreFragment extends Fragment implements RecycleViewItemAdapter.ItemClickCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final String METHOD_TITLE = "METHOD_TITLE";
+    private static final String METHOD_AUTHOR = "METHOD_AUTHOR";
+    private static final String BUNDLE = "BUNDLE";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RecyclerView mRecyclerView;
+    private RecycleViewItemAdapter mAdapter;
 
+    private List<RecycleViewItem> mRecycleViewMethodsData;
     public MethodsStoreFragment() {
         // Required empty public constructor
     }
@@ -66,6 +81,15 @@ public class MethodsStoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View return_view = inflater.inflate(R.layout.fragment_methods_store, container, false);
+        mRecyclerView = (RecyclerView)return_view.findViewById(R.id.methods_method_store_fragment_rv);
+
+
+        mRecycleViewMethodsData = RecycleViewMethodsData.getListData();
+        //RecycleViewMethodsData should be replaced with data from fire base
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        mAdapter = new RecycleViewItemAdapter(mRecycleViewMethodsData,inflater);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setItemClickCallback(this);
         return return_view;
     }
 
@@ -91,6 +115,25 @@ public class MethodsStoreFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+        RecycleViewItem item= (RecycleViewItem)mRecycleViewMethodsData.get(position);
+        Intent i = new Intent(this.getActivity(), MethodDetailsActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(METHOD_TITLE,item.getMethodTitle());
+        bundle.putString(METHOD_AUTHOR,item.getAuthor());
+
+        i.putExtra(BUNDLE,bundle);
+        startActivity(i);
+    }
+
+    @Override
+    public void onFavouriteIconClick(int position) {
+
     }
 
     /**

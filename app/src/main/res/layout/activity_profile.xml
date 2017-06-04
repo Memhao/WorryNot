@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/background720x1280_plain"
+    android:background="@drawable/background_rectangle"
     tools:context="licence.meme.worrynot.activities.ProfileActivity">
 
     <!--<android.support.design.widget.AppBarLayout-->

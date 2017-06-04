@@ -1,13 +1,10 @@
 package licence.meme.worrynot.fragments;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +12,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import org.greenrobot.eventbus.EventBus;
 
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.Method;
-import licence.meme.worrynot.models.MethodChangedEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -132,8 +127,6 @@ public class MethodContainerPopUpFragment extends DialogFragment implements View
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.cancel_fragment_methods_container_btn:
-//                EventBus bus = EventBus.getDefault();
-//                bus.post(new MethodChangedEvent(mCurrentMethod));
                 FirebaseService.getInstance().setActiveMethod(getActivity(),mCurrentMethod);
                 break;
             default:break;

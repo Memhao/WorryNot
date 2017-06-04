@@ -108,13 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        View return_view = inflater.inflate(R.layout.fragment_home, container, false);
         Log.e(TAG,"On Create View\n");
-//        bus = EventBus.getDefault();
-//        if(!bus.isRegistered(this)){
-//            bus.register(this);
-//        }
 
         mInflater=inflater;
         mFragmentView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -151,36 +145,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-//        if(mReceivedMethod == null){
-//            LiveInDayTightCompartmentsMethod mtd = new LiveInDayTightCompartmentsMethod();
-//            Metadata metedata = new Metadata(mtd.getAuthor(),mtd.getDescription(),mtd.getName());
-//            Info info = new Info(mtd.getStory(),mtd.getSteps());
-//            Method method = new Method(metedata,info);
-//            MethodRender methodRender = new MethodRender(method);
-//            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
-////            LinearLayout linearLayout = method.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
-//        }else {
-//            mEvaluateButton.setText( mReceivedMethod.getMetadata().getName());
             FirebaseService firebaseService = FirebaseService.getInstance();
             firebaseService.getActiveMethod(mFragmentView.getContext(),inflater,mFragmentView);
-//            MethodRender methodRender = new MethodRender(mReceivedMethod);
-//            methodRender.drawMethod(mFragmentView.getContext(),inflater,mFragmentView);
-//            mReceivedMethod.drawMethod(mFragmentView.getContext(), inflater, mFragmentView);
-//        }
 
 
-//        LinearLayout linearLayout = mReceivedMethod.drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
-
-        Log.e(TAG,"--------------------------\n");
         return mFragmentView;
     }
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onMessageEvent(MethodChangedEvent event) {
-//        Toast.makeText(getActivity(), event.getMethod().getMetadata().getName(), Toast.LENGTH_SHORT).show();
-//        mReceivedMethod = event.getMethod();
-//        mEvaluateButton.setText( mReceivedMethod.getMetadata().getName());
-////        LinearLayout linearLayout = event.getMethod().drawMethod(mFragmentView.getContext(), mInflater, mFragmentView);
-//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

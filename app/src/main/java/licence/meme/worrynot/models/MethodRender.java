@@ -98,7 +98,8 @@ public class MethodRender {
         storyTextView.setText(mMethod.getInfo().getStory());
         Log.e("TAG","____________-> STORY:"+nameTextView.getText().toString()+"");
 
-        stepTextView.setText(steps.get(0));
+        //TODO this is bad!
+//        stepTextView.setText(steps.get(0));
         UpDownListener upDownListener = new UpDownListener(steps,stepTextView);
         upButton.setOnClickListener(upDownListener);
         downButton.setOnClickListener(upDownListener);
