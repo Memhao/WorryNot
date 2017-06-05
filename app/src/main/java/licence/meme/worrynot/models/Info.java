@@ -13,11 +13,11 @@ public class Info {
     private String story;
     private List<String> steps;
     private List<String> questionnaire;
-    private HashMap<String,String> results;
+    private Result results;
     public Info(){
 
     }
-    public Info(String story, List<String> steps, List<String> questionnaire, HashMap<String ,String> results) {
+    public Info(String story, List<String> steps, List<String> questionnaire, Result results) {
         this.story = story;
         this.steps = steps;
         this.questionnaire = questionnaire;
@@ -33,7 +33,9 @@ public class Info {
 
         if (story != null ? !story.equals(info.story) : info.story != null) return false;
         if (steps != null ? !steps.equals(info.steps) : info.steps != null) return false;
-        return questionnaire != null ? questionnaire.equals(info.questionnaire) : info.questionnaire == null;
+        if (questionnaire != null ? !questionnaire.equals(info.questionnaire) : info.questionnaire != null)
+            return false;
+        return results != null ? results.equals(info.results) : info.results == null;
 
     }
 
@@ -42,7 +44,16 @@ public class Info {
         int result = story != null ? story.hashCode() : 0;
         result = 31 * result + (steps != null ? steps.hashCode() : 0);
         result = 31 * result + (questionnaire != null ? questionnaire.hashCode() : 0);
+        result = 31 * result + (results != null ? results.hashCode() : 0);
         return result;
+    }
+
+    public Result getResults() {
+        return results;
+    }
+
+    public void setResults(Result results) {
+        this.results = results;
     }
 
     public String getStory() {
@@ -69,11 +80,4 @@ public class Info {
         this.questionnaire = questionnaire;
     }
 
-    public HashMap<String, String> getResults() {
-        return results;
-    }
-
-    public void setResults(HashMap<String, String> results) {
-        this.results = results;
-    }
 }

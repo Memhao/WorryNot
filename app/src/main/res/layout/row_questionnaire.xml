@@ -25,6 +25,7 @@
 
             android:background="#c0ca33"
             android:numStars="5"
+            android:stepSize="1"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

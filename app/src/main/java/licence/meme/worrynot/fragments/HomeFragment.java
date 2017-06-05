@@ -127,23 +127,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mAvatarImageView = (CircleImageView) mFragmentView.findViewById(R.id.avatar_home_fragment_iv);
         mUserNameTextView = (TextView)mFragmentView.findViewById(R.id.name_home_fragment_tv);
         mExperienceProgressBar = (ProgressBar)mFragmentView.findViewById(R.id.experience_bar_home_fragment_pb);
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("users/"+uid);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                mAvatarImageView.setImageBitmap(Utils.decodeFromFirebaseBase64(user.getImage()));
-                mUserNameTextView.setText(user.getUsername());
-                mExperienceProgressBar.setProgress(user.getExperience());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG,"Fail database");
-            }
-        });
+//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference ref = database.getReference("users/"+uid);
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+//                mAvatarImageView.setImageBitmap(Utils.decodeFromFirebaseBase64(user.getImage()));
+//                mUserNameTextView.setText(user.getUsername());
+//                mExperienceProgressBar.setProgress(user.getExperience());
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.e(TAG,"Fail database");
+//            }
+//        });
 
             FirebaseService firebaseService = FirebaseService.getInstance();
             firebaseService.getActiveMethod(mFragmentView.getContext(),inflater,mFragmentView);

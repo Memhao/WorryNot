@@ -29,10 +29,10 @@ public class RecycleViewMethodsData {
         for (int x = 0; x  < 4; x++) {
             //create ListItem with dummy data, then add them to our List
             for (int i = 0; i  < titles.length && i  < authors.length; i++) {
-                RecycleViewItem item = new RecycleViewItem();
-                item.setAuthor(authors[i]);
-                item.setMethodTitle(titles[i]);
-                data.add(item);
+//                RecycleViewItem item = new RecycleViewItem();
+//                item.setAuthor(authors[i]);
+//                item.setMethodTitle(titles[i]);
+//                data.add(item);
             }
         }
         return data;

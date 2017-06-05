@@ -50,8 +50,8 @@ public class RecycleViewItemAdapter extends RecyclerView.Adapter<RecycleViewItem
     @Override
     public void onBindViewHolder(RecycleViewItemHolder holder, int position) {
         RecycleViewItem item = methods.get(position);
-        holder.methodTitle.setText(item.getMethodTitle());
-        holder.methodAuthor.setText(item.getAuthor());
+        holder.methodTitle.setText(item.getItemName());
+        holder.methodAuthor.setText(item.getItemAuthor());
 //        holder.methodIcon.setImageResource(item.getMethodImageResourceID());
         if(item.isFavourite()){
             holder.favouriteIcon.setImageResource(R.drawable.ic_star_black_24dp);

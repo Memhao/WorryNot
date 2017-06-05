@@ -3,8 +3,10 @@ package licence.meme.worrynot.models;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +35,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.activities.MainActivity;
+import licence.meme.worrynot.activities.MethodDetailsActivity;
 import licence.meme.worrynot.activities.ProfileActivity;
 import licence.meme.worrynot.activities.ResultPopUpActivity;
+import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
 import licence.meme.worrynot.licence.meme.worrynot.Levels;
 import licence.meme.worrynot.util.Utils;
 
@@ -48,6 +53,7 @@ public class FirebaseService {
     private  FirebaseUser mFirebaseUser;
     private  DatabaseReference mDatabaseReference;
     private static final String TAG = FirebaseService.class.getSimpleName();
+    public static boolean downloadAvailable = true;
     private FirebaseService(){
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -255,6 +261,67 @@ public class FirebaseService {
         });
     }
 
+    public void existsMethod(final Activity context,final String key,final String name,final String author){
+        FirebaseService.downloadAvailable = true;
+        String uid = mFirebaseUser.getUid();
+        final DatabaseReference destMethodsUserPath = mDatabaseReference.child("users").child(uid).child("methods");
+        destMethodsUserPath.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children  = dataSnapshot.getChildren();
+                List<Method> methods = new ArrayList<Method>();
+                for(DataSnapshot child:children) {
+                    Method cMethod = child.getValue(Method.class);
+                    methods.add(cMethod);
+                }
+                boolean downloadOk = true;
+                for(Method m: methods){
+                    if(m.getMetadata().getName().equals(name) && m.getMetadata().getAuthor().equals(author)){
+                        downloadAvailable = false;
+                        downloadOk = false;
+                        Toast.makeText(context,"Your already posses this method, please check your WorryNot list ",Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                if(downloadOk){
+                    downloadMethodFromStore(context,key);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    public void downloadMethodFromStore(final Activity context, final String key){
+
+        String uid = mFirebaseUser.getUid();
+        DatabaseReference sourceMethodsPath = mDatabaseReference.child("methods").child(key);
+        final DatabaseReference destMethodsUserPath = mDatabaseReference.child("users").child(uid).child("methods").push();
+
+        sourceMethodsPath.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                    destMethodsUserPath.setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if(databaseError != null){
+                                Toast.makeText(context,"Download fail, please try again",Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context,"Download succeed, please check your WorryNot list ",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
     /**
      * This method is used for upload a method created by user
      * @param context
@@ -316,7 +383,7 @@ public class FirebaseService {
 
     }
 
-    public void rateMethod(){
+    public void rateMethod(int score,String methodKey){
 
     }
 
@@ -344,6 +411,13 @@ public class FirebaseService {
         mDatabaseReference.child("users").child(uid).child("methods").addValueEventListener(methodsValueEventListener);
     }
 
+
+    public void populateMethodsStoreRecycleView(RecyclerView recyclerView, LayoutInflater inflater,Activity activity){
+        MethodsStoreEventListener methodsStoreEventListener = new MethodsStoreEventListener(recyclerView,inflater,activity);
+        mDatabaseReference.child("methods").addValueEventListener(methodsStoreEventListener);
+    }
+
+
     /**
      * This method gives feedback to user depending on score obtained for questionnaire
      * @param score
@@ -358,7 +432,7 @@ public class FirebaseService {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Method method = dataSnapshot.getValue(Method.class);
-                    String result = method.getInfo().getResults().get("low");
+                    String result = method.getInfo().getResults().getLow();
                     Log.e("FireBaseService","----RESULT FROM FIREBASE <3 :"+ result );
                     Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
                     final String TAG_TRANSFER = "RESULT";
@@ -377,7 +451,7 @@ public class FirebaseService {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Method method = dataSnapshot.getValue(Method.class);
-                    String result = method.getInfo().getResults().get("high");
+                    String result = method.getInfo().getResults().getHigh();
                     Log.e("FireBaseService","----RESULT FROM FIREBASE >3 :"+ result);
                     Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
                     final String TAG_TRANSFER = "RESULT";
@@ -396,7 +470,7 @@ public class FirebaseService {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Method method = dataSnapshot.getValue(Method.class);
-                    String result = method.getInfo().getResults().get("medium");
+                    String result = method.getInfo().getResults().getMedium();
                     Log.e("FireBaseService","----RESULT FROM FIREBASE =3 :"+ result);
                     Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
                     final String TAG_TRANSFER = "RESULT";
@@ -413,6 +487,68 @@ public class FirebaseService {
         }
 
     }
+
+    private class MethodsStoreEventListener implements ValueEventListener, RecycleViewItemAdapter.ItemClickCallback{
+        private static final String METHOD_TITLE = "METHOD_TITLE";
+        private static final String METHOD_AUTHOR = "METHOD_AUTHOR";
+        private static final String METHOD_RATING = "METHOD_RATING";
+        private static final String METHOD_DESCRIPTION = "METHOD_DESCRIPTION";
+        private static final String KEY = "KEY";
+        private static final String BUNDLE = "BUNDLE";
+
+        private RecyclerView mRecyclerView;
+        private LayoutInflater mInflater;
+        private List<RecycleViewItem> mMethods;
+        private RecycleViewItemAdapter mAdapter;
+        private Activity mActivity;
+        public MethodsStoreEventListener(RecyclerView recyclerView, LayoutInflater inflater,Activity activity) {
+            this.mRecyclerView = recyclerView;
+            this.mInflater = inflater;
+            this.mActivity = activity;
+            mMethods = new ArrayList<>();
+
+        }
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Iterable<DataSnapshot> children  = dataSnapshot.getChildren();
+            for(DataSnapshot child:children){
+                Method method = child.getValue(Method.class);
+                String key = child.getKey();
+                mMethods.add(new RecycleViewItem(method,key));
+                Log.e(TAG,"Methods lendth is :" + "Method 1 name is: "+ method.getMetadata().getAuthor());
+            }
+            mAdapter = new RecycleViewItemAdapter(mMethods,mInflater);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setItemClickCallback(this);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+
+        @Override
+        public void onItemClick(int position) {
+            RecycleViewItem item= (RecycleViewItem)mMethods.get(position);
+            Intent i = new Intent(mActivity, MethodDetailsActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(METHOD_TITLE,item.getItemName());
+            bundle.putString(METHOD_AUTHOR,item.getItemAuthor());
+            bundle.putInt(METHOD_RATING,item.getItemRating());
+            bundle.putString(METHOD_DESCRIPTION,item.getItemDescription());
+            bundle.putString(KEY,item.getKey());
+            i.putExtra(BUNDLE,bundle);
+            mActivity.startActivity(i);
+        }
+
+        @Override
+        public void onFavouriteIconClick(int position) {
+
+        }
+    }
+
 
     private class MethodsValueEventListener implements ValueEventListener{
         private List<Method> mMethods;

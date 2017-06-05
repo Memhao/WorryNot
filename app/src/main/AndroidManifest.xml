@@ -84,8 +84,10 @@
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
             android:name=".activities.MethodDetailsActivity"
+            android:theme="@style/AppTheme.PopUpTheme" />
+        <activity
             android:theme="@style/AppTheme.PopUpTheme"
-            />
+            android:name=".activities.RateMethodActivity"></activity>
     </application>
 
 </manifest>
