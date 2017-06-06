@@ -19,7 +19,6 @@ import licence.meme.worrynot.activities.MethodDetailsActivity;
 import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
 import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.RecycleViewItem;
-import licence.meme.worrynot.models.RecycleViewMethodsData;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -33,8 +34,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -43,6 +46,7 @@ import licence.meme.worrynot.activities.MainActivity;
 import licence.meme.worrynot.activities.MethodDetailsActivity;
 import licence.meme.worrynot.activities.ProfileActivity;
 import licence.meme.worrynot.activities.ResultPopUpActivity;
+import licence.meme.worrynot.adapter.RecycleViewCommentAdapter;
 import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
 import licence.meme.worrynot.licence.meme.worrynot.Levels;
 import licence.meme.worrynot.util.Utils;
@@ -261,6 +265,18 @@ public class FirebaseService {
         });
     }
 
+
+    public void writeComment(final Activity activity,final String methodKey,final String commentLine){
+        String uid = mFirebaseUser.getUid();
+        DatabaseReference commentsDatabaseReference = FirebaseDatabase.getInstance().getReference().child("methods").child(methodKey).child("metadata").child("comments");
+
+        Comment comment = new Comment();
+        comment.setId(uid);
+        comment.setMessage(commentLine);
+        commentsDatabaseReference.child(uid).setValue(comment);
+        Toast.makeText(activity,"Thanks for your time !",Toast.LENGTH_SHORT).show();
+
+    }
     public void existsMethod(final Activity context,final String key,final String name,final String author){
         FirebaseService.downloadAvailable = true;
         String uid = mFirebaseUser.getUid();
@@ -418,6 +434,11 @@ public class FirebaseService {
     }
 
 
+    public void populateMethodsCommentsRecycleView(RecyclerView recyclerView, LayoutInflater layoutInflater,Activity activity,String key){
+        Log.e(TAG,"Comment:--------"+"[populateMethodsCommentsRecycleView]"+key);
+        MethodCommentsEventListener metohdCommentsEventListener = new MethodCommentsEventListener(recyclerView,layoutInflater,activity);
+        mDatabaseReference.child("methods").child(key).child("metadata").child("comments").addValueEventListener(metohdCommentsEventListener);
+    }
     /**
      * This method gives feedback to user depending on score obtained for questionnaire
      * @param score
@@ -486,6 +507,42 @@ public class FirebaseService {
             //bring in results medium from database
         }
 
+    }
+
+
+    private  class MethodCommentsEventListener implements ValueEventListener{
+
+
+        private RecyclerView mRecyclerView;
+        private LayoutInflater mInflater;
+        private List<RecycleViewComment> mComments;
+        private RecycleViewCommentAdapter mAdapter;
+        private Activity mActivity;
+
+        public MethodCommentsEventListener(RecyclerView recyclerView, LayoutInflater layoutInflater,Activity activity){
+            this.mRecyclerView = recyclerView;
+            this.mInflater = layoutInflater;
+            this.mActivity = activity;
+            mComments = new ArrayList<>();
+        }
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Log.e(TAG,"Comment:--------"+"[MethodCommentsEventListener]:[onDataChange]"+dataSnapshot.getChildrenCount());
+
+            Iterable<DataSnapshot> children  = dataSnapshot.getChildren();
+            for(DataSnapshot child:children){
+                Comment comment = child.getValue(Comment.class);
+                String key = child.getKey();
+                mComments.add(new RecycleViewComment(key,comment));
+            }
+            mAdapter = new RecycleViewCommentAdapter(mComments,mInflater);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
     }
 
     private class MethodsStoreEventListener implements ValueEventListener, RecycleViewItemAdapter.ItemClickCallback{

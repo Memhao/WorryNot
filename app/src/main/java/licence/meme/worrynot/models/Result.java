@@ -9,7 +9,9 @@ public class Result {
     private String low;
     private String medium;
 
+    public Result(){
 
+    }
     public String getHigh() {
         return high;
     }

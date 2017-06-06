@@ -79,5 +79,4 @@ public class Info {
     public void setQuestionnaire(List<String> questionnaire) {
         this.questionnaire = questionnaire;
     }
-
 }

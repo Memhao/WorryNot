@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical|left"
+    android:layout_height="100dp"
+    android:paddingLeft="16dp"
+    >
+<TextView
+    android:id="@+id/comment_recycle_comment_tv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:fontFamily="sans-serif"
+    android:maxLines="5"
+    android:text="Un vultur sta pe pisc c-un pix in plisc Un vultur sta pe pisc c-un pix in plisc Un vultur sta pe pisc c-un pix in plisc"
+    android:textSize="16sp"
+    />
+
+    <TextView
+        android:id="@+id/author_recycle_comment_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment_recycle_comment_tv"
+        android:text="Yello Jakarta"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="48dp"
+        android:textColor="@android:color/black"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:maxLines="1"
+        android:textSize="16sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@+id/author_recycle_comment_tv"></View>
+</RelativeLayout>
