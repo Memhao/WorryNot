@@ -43,11 +43,11 @@ public class MethodAdapter extends ArrayAdapter {
 //        methodNameTextView.setText(mMethods.get(position).getMetadata().getName());
 //        descriptionTextView.setText(mMethods.get(position).getMetadata().getDescription());
 
-        TextView  methodNameTextView = (TextView)v.findViewById(R.id.name_method_row_method_tv);
-        TextView descriptionTextView = (TextView)v.findViewById(R.id.description_row_method_tv);
+//        TextView  methodNameTextView = (TextView)v.findViewById(R.id.name_method_row_method_tv);
+//        TextView descriptionTextView = (TextView)v.findViewById(R.id.description_row_method_tv);
         Log.e("TAG----------",mMethods.get(position).getMetadata().getName());
-        methodNameTextView.setText(mMethods.get(position).getMetadata().getName());
-        descriptionTextView.setText(mMethods.get(position).getMetadata().getDescription());
+//        methodNameTextView.setText(mMethods.get(position).getMetadata().getName());
+//        descriptionTextView.setText(mMethods.get(position).getMetadata().getDescription());
         return v;
     }
 

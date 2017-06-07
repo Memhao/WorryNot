@@ -32,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,6 +50,7 @@ import licence.meme.worrynot.activities.ProfileActivity;
 import licence.meme.worrynot.activities.ResultPopUpActivity;
 import licence.meme.worrynot.adapter.RecycleViewCommentAdapter;
 import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
+import licence.meme.worrynot.adapter.RecycleViewUserMethodAdapter;
 import licence.meme.worrynot.licence.meme.worrynot.Levels;
 import licence.meme.worrynot.util.Utils;
 
@@ -365,7 +368,7 @@ public class FirebaseService {
         String uid = mFirebaseUser.getUid();
         DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("activeMethod");
         usersDatabaseReference.setValue(method);
-        Toast.makeText(context,"Method has been selected",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Method has been activated",Toast.LENGTH_SHORT).show();
     }
     public void getActiveMethod(final Context context, final LayoutInflater inflater, final View parentView){
         String uid = mFirebaseUser.getUid();
@@ -415,16 +418,10 @@ public class FirebaseService {
         mDatabaseReference.child("methods").addValueEventListener(methodsValueEventListener);
     }
 
-    /**
-     * This method is used to populate and update in real time listView given as parameter within the context with WorryNots from users' methods
-     *
-     * @param listView
-     * @param context
-     */
-    public void populateUserMethodsContainer(ListView listView, Context context){
+    public void populateUserMethodsRecyclerView(RecyclerView recyclerView, LayoutInflater layoutInflater,Activity activity,TextView textView){
         String uid = mFirebaseUser.getUid();
-        final MethodsValueEventListener methodsValueEventListener = new MethodsValueEventListener( listView, context);
-        mDatabaseReference.child("users").child(uid).child("methods").addValueEventListener(methodsValueEventListener);
+        final UserMethodsValueEventListener userMethodsValueEventListener = new UserMethodsValueEventListener( recyclerView,layoutInflater,activity,textView);
+        mDatabaseReference.child("users").child(uid).child("methods").addValueEventListener(userMethodsValueEventListener);
     }
 
 
@@ -545,7 +542,58 @@ public class FirebaseService {
         }
     }
 
-    private class MethodsStoreEventListener implements ValueEventListener, RecycleViewItemAdapter.ItemClickCallback{
+
+    private class UserMethodsValueEventListener implements ValueEventListener, RecycleViewUserMethodAdapter.ItemClickCallback{
+
+        private RecyclerView mRecyclerView;
+        private LayoutInflater mInflater;
+        private List<Method> mMethods;
+        private RecycleViewUserMethodAdapter mAdapter;
+        private Activity mActivity;
+        private TextView mTextView;
+
+        public UserMethodsValueEventListener(RecyclerView recyclerView, LayoutInflater inflater,Activity activity,TextView textView){
+            this.mRecyclerView = recyclerView;
+            this.mInflater = inflater;
+            this.mActivity = activity;
+            mTextView = textView;
+            mMethods = new ArrayList<>();
+        }
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Iterable<DataSnapshot> children  = dataSnapshot.getChildren();
+            for(DataSnapshot child:children){
+                Method method = child.getValue(Method.class);
+                String key = child.getKey();
+                mMethods.add(method);
+                Log.e(TAG,"Methods lendth is :" + "Method 1 name is: "+ method.getMetadata().getAuthor());
+            }
+            mAdapter = new RecycleViewUserMethodAdapter(mMethods,mInflater);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setItemClickCallback(this);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+
+        @Override
+        public void onItemClick(int position) {
+            Method item= mMethods.get(position);
+            mTextView.setText(item.getMetadata().getName() +"has been selected.");
+        }
+
+        @Override
+        public void onActiveSelected(int position) {
+            setActiveMethod(mActivity,mMethods.get(position));
+        }
+
+
+    }
+
+
+        private class MethodsStoreEventListener implements ValueEventListener, RecycleViewItemAdapter.ItemClickCallback{
         private static final String METHOD_TITLE = "METHOD_TITLE";
         private static final String METHOD_AUTHOR = "METHOD_AUTHOR";
         private static final String METHOD_RATING = "METHOD_RATING";
@@ -587,7 +635,7 @@ public class FirebaseService {
 
         @Override
         public void onItemClick(int position) {
-            RecycleViewItem item= (RecycleViewItem)mMethods.get(position);
+            RecycleViewItem item= mMethods.get(position);
             Intent i = new Intent(mActivity, MethodDetailsActivity.class);
 
             Bundle bundle = new Bundle();

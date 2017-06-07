@@ -24,6 +24,7 @@ import licence.meme.worrynot.fragments.HomeFragment;
 import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
 import licence.meme.worrynot.fragments.MethodManagerFragment;
 import licence.meme.worrynot.fragments.MethodsStoreFragment;
+import licence.meme.worrynot.fragments.UserMethodsFragment;
 import licence.meme.worrynot.models.Method;
 import licence.meme.worrynot.util.MethodRenderCustomView;
 
@@ -31,7 +32,8 @@ public class ProfileActivity extends AppCompatActivity implements
         HomeFragment.OnFragmentInteractionListener,
         MethodManagerFragment.OnFragmentInteractionListener,
         MethodContainerPopUpFragment.OnFragmentInteractionListener,
-        MethodsStoreFragment.OnFragmentInteractionListener
+        MethodsStoreFragment.OnFragmentInteractionListener,
+        UserMethodsFragment.OnFragmentInteractionListener
 {
 
     /**
@@ -165,8 +167,10 @@ public class ProfileActivity extends AppCompatActivity implements
                     Fragment methodStoreFragment = new MethodsStoreFragment();
                     return methodStoreFragment;
                 case 3:
-                    Fragment methodsContainer = new MethodContainerPopUpFragment();
-                    return methodsContainer;
+                    Fragment userMethodsContainer = new UserMethodsFragment();
+                    return userMethodsContainer;
+//                    Fragment methodsContainer = new MethodContainerPopUpFragment();
+//                    return methodsContainer;
                 default:
                     return null;
             }
