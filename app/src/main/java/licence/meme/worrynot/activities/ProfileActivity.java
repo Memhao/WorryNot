@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.fragments.CreateMethodFragment;
 import licence.meme.worrynot.fragments.HomeFragment;
 import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
 import licence.meme.worrynot.fragments.MethodManagerFragment;
@@ -33,7 +34,8 @@ public class ProfileActivity extends AppCompatActivity implements
         MethodManagerFragment.OnFragmentInteractionListener,
         MethodContainerPopUpFragment.OnFragmentInteractionListener,
         MethodsStoreFragment.OnFragmentInteractionListener,
-        UserMethodsFragment.OnFragmentInteractionListener
+        UserMethodsFragment.OnFragmentInteractionListener,
+        CreateMethodFragment.OnFragmentInteractionListener
 {
 
     /**
