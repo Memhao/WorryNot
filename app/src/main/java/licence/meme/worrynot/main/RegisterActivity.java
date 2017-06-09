@@ -1,4 +1,4 @@
-package licence.meme.worrynot.activities;
+package licence.meme.worrynot.main;
 
 import android.app.Activity;
 import android.content.Intent;

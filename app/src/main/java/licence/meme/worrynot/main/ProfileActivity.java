@@ -1,4 +1,4 @@
-package licence.meme.worrynot.activities;
+package licence.meme.worrynot.main;
 
 import android.net.Uri;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -16,18 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.fragments.CreateMethodFragment;
-import licence.meme.worrynot.fragments.HomeFragment;
+import licence.meme.worrynot.gui.home.HomeFragment;
 import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
 import licence.meme.worrynot.fragments.MethodManagerFragment;
 import licence.meme.worrynot.fragments.MethodsStoreFragment;
 import licence.meme.worrynot.fragments.UserMethodsFragment;
-import licence.meme.worrynot.models.Method;
-import licence.meme.worrynot.util.MethodRenderCustomView;
 
 public class ProfileActivity extends AppCompatActivity implements
         HomeFragment.OnFragmentInteractionListener,
@@ -137,8 +132,6 @@ public class ProfileActivity extends AppCompatActivity implements
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -163,8 +156,8 @@ public class ProfileActivity extends AppCompatActivity implements
                     Fragment homeFragment = new HomeFragment();
                     return homeFragment;
                 case 1:
-                    Fragment methodManagerFragment = new MethodManagerFragment();
-                    return methodManagerFragment;
+                    Fragment createMethodFragment = new CreateMethodFragment();
+                    return createMethodFragment;
                 case 2:
                     Fragment methodStoreFragment = new MethodsStoreFragment();
                     return methodStoreFragment;

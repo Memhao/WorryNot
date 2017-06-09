@@ -58,19 +58,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".main.MainActivity" />
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name=".main.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_register"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name=".activities.ForgotPasswordActivity"
+            android:name=".main.ForgotPasswordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_forgot_password"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name=".main.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
         <activity

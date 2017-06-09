@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
-import licence.meme.worrynot.activities.MainActivity;
+import licence.meme.worrynot.main.MainActivity;
 
 
 public class WorryNotMainActivity extends Activity  {

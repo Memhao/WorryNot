@@ -1,4 +1,4 @@
-package licence.meme.worrynot.activities;
+package licence.meme.worrynot.main;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLoginButton = (Button)findViewById(R.id.login_main_activity_btn);
         mForgtoPasswordButton = (Button)findViewById(R.id.forgot_main_activity_btn);
         mRegisterButton = (Button)findViewById(R.id.signup_main_avitivty_btn);
-
         mEmailEditText = (EditText)findViewById(R.id.email_main_activity_et);
         mPasswordEditText = (EditText)findViewById(R.id.password_main_activity_et);
 

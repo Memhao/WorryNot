@@ -1,4 +1,4 @@
-package licence.meme.worrynot.fragments;
+package licence.meme.worrynot.gui.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,24 +14,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 import org.greenrobot.eventbus.EventBus;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.activities.MainActivity;
+import licence.meme.worrynot.main.MainActivity;
 import licence.meme.worrynot.activities.QuestionnaireActivity;
 import licence.meme.worrynot.activities.ResetPasswordActivity;
 import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.Method;
-import licence.meme.worrynot.models.User;
-import licence.meme.worrynot.util.Utils;
 
 /**
  * A simple {@link Fragment} subclass.

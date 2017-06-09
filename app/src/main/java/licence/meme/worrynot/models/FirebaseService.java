@@ -10,18 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,21 +29,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.activities.MainActivity;
+import licence.meme.worrynot.main.MainActivity;
 import licence.meme.worrynot.activities.MethodDetailsActivity;
-import licence.meme.worrynot.activities.ProfileActivity;
+import licence.meme.worrynot.main.ProfileActivity;
 import licence.meme.worrynot.activities.ResultPopUpActivity;
 import licence.meme.worrynot.adapter.RecycleViewCommentAdapter;
 import licence.meme.worrynot.adapter.RecycleViewItemAdapter;

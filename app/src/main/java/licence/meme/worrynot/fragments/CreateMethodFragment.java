@@ -1,14 +1,23 @@
 package licence.meme.worrynot.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.adapter.RecycleViewEntryAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +38,9 @@ public class CreateMethodFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private RecyclerView mStepsRecyclerView;
+    private RecycleViewEntryAdapter mStepsAdapter;
+    private Button mStepButton;
     public CreateMethodFragment() {
         // Required empty public constructor
     }
@@ -66,9 +77,72 @@ public class CreateMethodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View parentView  = inflater.inflate(R.layout.fragment_create_method, container, false);
+        mStepsRecyclerView = (RecyclerView)parentView.findViewById(R.id.steps_create_method_fragment_rv);
+        mStepButton = (Button)parentView.findViewById(R.id.add_steps_create_method_btn);
+        mStepsRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mStepsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mStepsAdapter = new RecycleViewEntryAdapter(inflater,mStepsRecyclerView,this.getActivity());
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(newHelperCallback());
+//        itemTouchHelper.attachToRecyclerView(mStepsRecyclerView);
+        mStepsRecyclerView.setAdapter(mStepsAdapter);
+        mStepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(String s:mStepsAdapter.getEntries()){
+                    Log.e("CreateMethodFragment","[onCreate]"+s);
+                }
+                for(int i = 0; i < mStepsRecyclerView.getChildCount();i++){
+                    RecycleViewEntryAdapter.EntryHolder holder = (RecycleViewEntryAdapter.EntryHolder) mStepsRecyclerView.findViewHolderForAdapterPosition(i);
+                    EditText et = holder.getEntryEditText();
+                    Log.e("LOG:", et.getText().toString());
+                }
+
+            }
+        });
+
+        mStepsRecyclerView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    hideKeyboard(v);
+                }
+            }
+        });
         return parentView;
     }
 
+    private void hideKeyboard(View v){
+        InputMethodManager inputMethodManager =(InputMethodManager)this.getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    private ItemTouchHelper.Callback newHelperCallback(){
+        ItemTouchHelper.SimpleCallback simpleEntryTouchCallback =
+                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
+
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        moveEntry(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                        return true;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        deleteEntry(viewHolder.getAdapterPosition());
+                    }
+                };
+                return simpleEntryTouchCallback;
+    }
+    public void moveEntry(int oldPosition, int newPosition){
+
+    }
+    public void deleteEntry(int position){
+
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

@@ -7,19 +7,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.List;
 import java.util.Map;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.main.ProfileActivity;
 import licence.meme.worrynot.models.ExperienceManager;
 import licence.meme.worrynot.models.FirebaseService;
-import licence.meme.worrynot.models.QuestionnaireRender;
 import licence.meme.worrynot.models.Score;
 
 public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener {

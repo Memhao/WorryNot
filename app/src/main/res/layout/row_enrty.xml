@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:gravity="center_vertical|left"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:paddingLeft="16dp"
+    android:clickable="true"
+
+    >
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:background="@color/colorAccent"
+        app:counterEnabled="true"
+        app:counterMaxLength="90"
+        android:id="@+id/text_row_entry_til"
+        android:layout_marginTop="8dp">
+        <EditText
+            android:id="@+id/text_row_entry_fragment_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:background="@color/colorAccent"
+            android:inputType="textCapSentences|textMultiLine"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/add_row_entry_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_note_add_black_24dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@+id/text_row_entry_til"
+        ></View>
+</RelativeLayout>
