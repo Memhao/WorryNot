@@ -51,62 +51,62 @@ public class MethodRender {
         }
     }
     public void drawMethod(Context context, LayoutInflater inflater, View parentView){
-        LinearLayout methodLinearLayout = (LinearLayout)parentView.findViewById(R.id.method_fragment_ll);
-        FrameLayout frameLayout = (FrameLayout) inflater.inflate(R.layout.sample_method_render_custom_view, null, false);
-        ConstraintLayout constraintLayout = (ConstraintLayout) frameLayout.getChildAt(0);
-        Log.e("[drawMethod]","_______DRAW METHOD________"+mMethod.getMetadata().getName()+"_____________");
-        TextView nameTextView = (TextView)constraintLayout.getChildAt(0);
-        nameTextView.setMovementMethod(new ScrollingMovementMethod());
-        nameTextView.setTextColor(Color.parseColor("#AF5910"));
-        TextView authorTextView = (TextView)constraintLayout.getChildAt(1);
-        authorTextView.setMovementMethod(new ScrollingMovementMethod());
-        authorTextView.setTextColor(Color.parseColor("#AF5910"));
-        TextView descriptionTextView = (TextView)constraintLayout.getChildAt(2);
-        descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
-        descriptionTextView.setTextColor(Color.parseColor("#AF5910"));
-        TextView storyTextView = (TextView)constraintLayout.getChildAt(3);
-        storyTextView.setMovementMethod(new ScrollingMovementMethod());
-        storyTextView.setTextColor(Color.parseColor("#AF5910"));
-        Button upButton = (Button) constraintLayout.getChildAt(4);
-        TextView stepTextView = (TextView)constraintLayout.getChildAt(5);
-        Button downButton = (Button)constraintLayout.getChildAt(6);
-
-        List<String> steps = mMethod.getInfo().getSteps();
-        //debug
-//        for(int i = 0; i< steps.size();i++){
-//            Log.e("MethodRender--->",steps.get(i));
-//        }
-
-        /**
-         * Set Name
-         */
-        nameTextView.setText(mMethod.getMetadata().getName());
-
-        /**
-         * Set Author
-         */
-        authorTextView.setText(mMethod.getMetadata().getAuthor());
-
-        /**
-         * Set Description
-         */
-        descriptionTextView.setText(mMethod.getMetadata().getDescription());
-
-        /**
-         * Set Story
-         */
-        storyTextView.setText(mMethod.getInfo().getStory());
-        Log.e("TAG","____________-> STORY:"+nameTextView.getText().toString()+"");
-
-        //TODO this is bad!
-//        stepTextView.setText(steps.get(0));
-        UpDownListener upDownListener = new UpDownListener(steps,stepTextView);
-        upButton.setOnClickListener(upDownListener);
-        downButton.setOnClickListener(upDownListener);
-
-
-        methodLinearLayout.addView(frameLayout);
-        Log.e("TAG","_______________"+mMethod.getMetadata().getName()+"_____ has been draw________");
+//        LinearLayout methodLinearLayout = (LinearLayout)parentView.findViewById(R.id.method_fragment_ll);
+//        FrameLayout frameLayout = (FrameLayout) inflater.inflate(R.layout.sample_method_render_custom_view, null, false);
+//        ConstraintLayout constraintLayout = (ConstraintLayout) frameLayout.getChildAt(0);
+//        Log.e("[drawMethod]","_______DRAW METHOD________"+mMethod.getMetadata().getName()+"_____________");
+//        TextView nameTextView = (TextView)constraintLayout.getChildAt(0);
+//        nameTextView.setMovementMethod(new ScrollingMovementMethod());
+//        nameTextView.setTextColor(Color.parseColor("#AF5910"));
+//        TextView authorTextView = (TextView)constraintLayout.getChildAt(1);
+//        authorTextView.setMovementMethod(new ScrollingMovementMethod());
+//        authorTextView.setTextColor(Color.parseColor("#AF5910"));
+//        TextView descriptionTextView = (TextView)constraintLayout.getChildAt(2);
+//        descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
+//        descriptionTextView.setTextColor(Color.parseColor("#AF5910"));
+//        TextView storyTextView = (TextView)constraintLayout.getChildAt(3);
+//        storyTextView.setMovementMethod(new ScrollingMovementMethod());
+//        storyTextView.setTextColor(Color.parseColor("#AF5910"));
+//        Button upButton = (Button) constraintLayout.getChildAt(4);
+//        TextView stepTextView = (TextView)constraintLayout.getChildAt(5);
+//        Button downButton = (Button)constraintLayout.getChildAt(6);
+//
+////        List<String> steps = mMethod.getInfo().getSteps();
+//        //debug
+////        for(int i = 0; i< steps.size();i++){
+////            Log.e("MethodRender--->",steps.get(i));
+////        }
+//
+//        /**
+//         * Set Name
+//         */
+//        nameTextView.setText(mMethod.getMetadata().getName());
+//
+//        /**
+//         * Set Author
+//         */
+//        authorTextView.setText(mMethod.getMetadata().getAuthor());
+//
+//        /**
+//         * Set Description
+//         */
+//        descriptionTextView.setText(mMethod.getMetadata().getDescription());
+//
+//        /**
+//         * Set Story
+//         */
+//        storyTextView.setText(mMethod.getInfo().getStory());
+//        Log.e("TAG","____________-> STORY:"+nameTextView.getText().toString()+"");
+//
+//        //TODO this is bad!
+////        stepTextView.setText(steps.get(0));
+//        UpDownListener upDownListener = new UpDownListener(steps,stepTextView);
+//        upButton.setOnClickListener(upDownListener);
+//        downButton.setOnClickListener(upDownListener);
+//
+//
+////        methodLinearLayout.addView(frameLayout);
+//        Log.e("TAG","_______________"+mMethod.getMetadata().getName()+"_____ has been draw________");
 
     }
 

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,10 +35,12 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.gui.logic.adapter.StepAdapter;
+import licence.meme.worrynot.gui.logic.render.WorryNotRender;
 import licence.meme.worrynot.main.MainActivity;
 import licence.meme.worrynot.activities.MethodDetailsActivity;
 import licence.meme.worrynot.main.ProfileActivity;
-import licence.meme.worrynot.activities.ResultPopUpActivity;
+import licence.meme.worrynot.gui.screen.home.ResultPopUpActivity;
 import licence.meme.worrynot.adapter.RecycleViewCommentAdapter;
 import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
 import licence.meme.worrynot.adapter.RecycleViewUserMethodAdapter;
@@ -89,7 +92,7 @@ public class FirebaseService {
                                     User user = new User(username,email,0,image);
                                     Method method = dataSnapshot.getValue(Method.class);
                                     user.setActiveMethod(method);
-                                    user.addMethod(method);
+                                    user.addMethod("dfltmtd02",method);
                                     addUserToDatabase(user);
                                     context.startActivity(new Intent(context, ProfileActivity.class));
                                 }
@@ -164,7 +167,7 @@ public class FirebaseService {
     /**
      * This method is used to reset password
      *
-     * @param context ResetPasswordActivity
+     * @param context ChangePasswordActivity
      * @param email to send your request for reset the password
      */
     public void resetPassword(final Activity context, String email ){
@@ -360,17 +363,39 @@ public class FirebaseService {
         usersDatabaseReference.setValue(method);
         Toast.makeText(context,"Method has been activated",Toast.LENGTH_SHORT).show();
     }
-    public void getActiveMethod(final Context context, final LayoutInflater inflater, final View parentView){
+
+    public void updateViewActiveMethod(final Context context, final TextView worryNotName, final TextView worryNotDescription, final ListView steps){
         String uid = mFirebaseUser.getUid();
         DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Method method = dataSnapshot.getValue(Method.class);
-                MethodRender render = new MethodRender(method);
-                Log.e("[getActiveMethod]","_______ACTIVE METHOD________"+method.getMetadata().getName()+"_____________");
+                Method worryNot = dataSnapshot.getValue(Method.class);
+                worryNotName.setText(worryNot.getMetadata().getName());
+                worryNotDescription.setText(worryNot.getMetadata().getDescription());
 
-                render.drawMethod(context,inflater,parentView);
+                StepAdapter stepAdapter = new StepAdapter(context,worryNot.getInfo().getSteps());
+                steps.setAdapter(stepAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void updateViewUserBasicInfo(final CircleImageView avatar,final TextView name, final ProgressBar progressBar){
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users").child(uid);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                avatar.setImageBitmap(Utils.decodeFromFirebaseBase64(user.getImage()));
+                name.setText(user.getUsername()+"\n"+user.getLevel());
+                progressBar.setProgress(user.getExperience());
             }
 
             @Override
@@ -379,7 +404,6 @@ public class FirebaseService {
             }
         });
     }
-
 
     public void populateQuestionnaire(ListView listView,Context context, Score score){
         String uid = mFirebaseUser.getUid();

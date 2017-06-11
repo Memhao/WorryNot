@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.fragments.CreateMethodFragment;
-import licence.meme.worrynot.gui.home.HomeFragment;
+import licence.meme.worrynot.gui.screen.home.HomeFragment;
 import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
 import licence.meme.worrynot.fragments.MethodManagerFragment;
 import licence.meme.worrynot.fragments.MethodsStoreFragment;

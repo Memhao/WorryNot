@@ -17,12 +17,12 @@ public class Info {
     public Info(){
 
     }
-    public Info(String story, List<String> steps, List<String> questionnaire, Result results) {
-        this.story = story;
-        this.steps = steps;
-        this.questionnaire = questionnaire;
-        this.results = results;
-    }
+//    public Info(String story, List<String> steps, List<String> questionnaire, Result results) {
+//        this.story = story;
+//        this.steps = steps;
+//        this.questionnaire = questionnaire;
+//        this.results = results;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -67,7 +67,6 @@ public class Info {
     public List<String> getSteps() {
         return steps;
     }
-
     public void setSteps(List<String> steps) {
         this.steps = steps;
     }

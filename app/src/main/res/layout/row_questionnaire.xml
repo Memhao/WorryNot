@@ -3,27 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="101dp">
+    android:layout_height="93dp">
 
 
 
     <TextView
         android:id="@+id/question_row_question_tv"
         android:layout_width="match_parent"
-        android:background="#c0ca33"
-        android:layout_height="50dp" />
+        android:background="@color/colorAccent"
+        android:maxLines="2"
+        android:maxLength="300"
+        android:textSize="16sp"
+        android:layout_height="46dp" />
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#c0ca33"
+        android:layout_height="46dp"
+        android:background="@color/colorAccent"
         >
 
         <RatingBar
             android:id="@+id/evaluate_question_row_question_rb"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="46dp"
 
-            android:background="#c0ca33"
+            android:background="@color/colorAccent"
             android:numStars="5"
             android:stepSize="1"
             android:layout_marginRight="8dp"

@@ -17,6 +17,14 @@
 
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
 
+    <string name="create_steps_fragment_create_worry_not">
+        Pay attention ! Theare are more steps in creating a worry not:\n\n
+        1.Give it a name , a description and a story\n\n
+        2.Define steps that help you to wipe out your worries\n\n
+        3.Create questions to check that steps were correctly and completely applied\n\n
+        4.Create results for questionnaire\n
+    </string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

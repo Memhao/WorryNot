@@ -74,13 +74,13 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.ResetPasswordActivity"
+            android:name=".gui.screen.home.ChangePasswordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".activities.QuestionnaireActivity" />
+        <activity android:name=".gui.screen.home.QuestionnaireActivity" />
         <activity
-            android:name=".activities.ResultPopUpActivity"
+            android:name=".gui.screen.home.ResultPopUpActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
             android:name=".activities.MethodDetailsActivity"
@@ -93,8 +93,11 @@
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
             android:name=".activities.ShowMethodCommentsActivity"
-            android:theme="@style/AppTheme.PopUpTheme"
-            ></activity>
+            android:theme="@style/AppTheme.PopUpTheme" />
+        <activity android:name=".gui.screen.worrynotcreator.CreateWorryNotInfoActivity" />
+        <activity android:name=".gui.screen.worrynotcreator.CreateWorryNotStepsActivity" />
+        <activity android:name=".gui.screen.worrynotcreator.CreateWorryNotQuestionnaireActivity" />
+        <activity android:name=".gui.screen.worrynotcreator.CreateWorryNotResultsActivity"></activity>
     </application>
 
 </manifest>

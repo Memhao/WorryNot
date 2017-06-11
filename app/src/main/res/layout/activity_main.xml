@@ -63,7 +63,7 @@
         android:layout_width="205dp"
         android:layout_height="40dp"
         android:background="@drawable/button_scheme"
-        android:text="Forgot..."
+        android:text="Forgot Password"
         android:textColor="#21150f"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/signup_main_avitivty_btn"

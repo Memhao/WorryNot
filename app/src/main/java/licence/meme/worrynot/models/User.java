@@ -9,6 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,8 @@ public class User {
     private String image;
     private int experience;
     private int level;
-    private List<Method> methods = new ArrayList<>();//in ordinea in care le bag
+//    private List<Method> methods = new ArrayList<>();//in ordinea in care le bag
+    private HashMap<String,Method> methods = new HashMap<>();//in ordinea in care le bag
     private Method activeMethod;
     public static User getFirebaseUserInstance(String uid){
         final User user[] = {null};
@@ -49,13 +51,18 @@ public class User {
 
     }
 
-    public void addMethod(Method method){
-        methods.add(method);
+//    public void addMethod(Method method){
+//        methods.add(method);
+//    }
+//    public void removeMethod(Method method){
+//        methods.remove(method);
+//    }
+    public void addMethod(String key,Method method){
+        methods.put(key,method);
     }
-    public void removeMethod(Method method){
-        methods.remove(method);
+    public void removeMethod(String key){
+        methods.remove(key);
     }
-
     public String getUsername() {
         return username;
     }
@@ -96,11 +103,19 @@ public class User {
         this.level = level;
     }
 
-    public List<Method> getMethods() {
+//    public List<Method> getMethods() {
+//        return methods;
+//    }
+//
+//    public void setMethods(List<Method> methods) {
+//        this.methods = methods;
+//    }
+
+    public HashMap<String, Method> getMethods() {
         return methods;
     }
 
-    public void setMethods(List<Method> methods) {
+    public void setMethods(HashMap<String, Method> methods) {
         this.methods = methods;
     }
 

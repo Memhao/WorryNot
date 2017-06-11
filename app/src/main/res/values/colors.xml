@@ -11,4 +11,8 @@
     <color name="colorAccent">#eceff1</color>
     <color name="colorLimePrimary">#827717</color>
     <color name="black_overlay">#66000000</color>
+
+    <color name="colorTertiary">#c0ca33</color>
+    <color name="colorTertiaryDark">#8c8800</color>
+
 </resources>
