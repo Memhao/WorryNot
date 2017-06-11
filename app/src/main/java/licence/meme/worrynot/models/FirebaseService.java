@@ -9,8 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,7 +34,6 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.gui.logic.adapter.StepAdapter;
-import licence.meme.worrynot.gui.logic.render.WorryNotRender;
 import licence.meme.worrynot.main.MainActivity;
 import licence.meme.worrynot.activities.MethodDetailsActivity;
 import licence.meme.worrynot.main.ProfileActivity;
@@ -85,15 +82,40 @@ public class FirebaseService {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            mDatabaseReference.child("methods").child("-dfltmtd02").addValueEventListener(new ValueEventListener() {
+//                            mDatabaseReference.child("methods").child("-dfltmtd02").addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(DataSnapshot dataSnapshot) {
+//                                    Log.d(this.getClass().getSimpleName(), "createUserWithEmail:success");
+//                                    User user = new User(username,email,0,image);
+//                                    Method method = dataSnapshot.getValue(Method.class);
+//                                    user.setActiveMethod(method);
+////                                    user.addMethod("dfltmtd02",method);
+//                                    user.addWorryNot(method);
+//                                    addUserToDatabase(user);
+//
+//                                    context.startActivity(new Intent(context, ProfileActivity.class));
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(DatabaseError databaseError) {
+//
+//                                }
+//                            });
+
+                            mDatabaseReference.child("methods").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Log.d(this.getClass().getSimpleName(), "createUserWithEmail:success");
-                                    User user = new User(username,email,0,image);
-                                    Method method = dataSnapshot.getValue(Method.class);
-                                    user.setActiveMethod(method);
-                                    user.addMethod("dfltmtd02",method);
-                                    addUserToDatabase(user);
+                                    for(DataSnapshot child:dataSnapshot.getChildren()){
+                                        User user = new User(username,email,0,image);
+                                        Method method = child.getValue(Method.class);
+                                        user.setActiveMethod(method);
+//                                        user.addWorryNot(method);
+                                        user.addMethod(child.getKey(),method);
+                                        addUserToDatabase(user);
+
+                                        break;
+                                    }
                                     context.startActivity(new Intent(context, ProfileActivity.class));
                                 }
 
@@ -102,8 +124,6 @@ public class FirebaseService {
 
                                 }
                             });
-
-
                         } else {
                             Log.e(this.getClass().getSimpleName(), "Fail auth", task.getException());
                             Toast.makeText(context, "Authentication failed.",
@@ -357,6 +377,12 @@ public class FirebaseService {
         Toast.makeText(context,"Worry Not successfully added to your bucket",Toast.LENGTH_SHORT).show();
     }
 
+
+    public void  publishMethod(final Activity context, final Method method){
+        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("methods");
+        usersDatabaseReference.push().setValue(method);
+        Toast.makeText(context,"Worry Not successfully added to your bucket",Toast.LENGTH_SHORT).show();
+    }
     public void setActiveMethod(final Activity context, final Method method){
         String uid = mFirebaseUser.getUid();
         DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("activeMethod");
@@ -374,7 +400,11 @@ public class FirebaseService {
                 worryNotName.setText(worryNot.getMetadata().getName());
                 worryNotDescription.setText(worryNot.getMetadata().getDescription());
 
-                StepAdapter stepAdapter = new StepAdapter(context,worryNot.getInfo().getSteps());
+                List<String> msteps = new ArrayList<String>();
+                for(String str:worryNot.getInfo().getSteps().values()){
+                    msteps.add(str);
+                }
+                StepAdapter stepAdapter = new StepAdapter(context,msteps);
                 steps.setAdapter(stepAdapter);
             }
 
@@ -635,7 +665,7 @@ public class FirebaseService {
                 Method method = child.getValue(Method.class);
                 String key = child.getKey();
                 mMethods.add(new RecycleViewItem(method,key));
-                Log.e(TAG,"Methods lendth is :" + "Method 1 name is: "+ method.getMetadata().getAuthor());
+//                Log.e(TAG,"Methods lendth is :" + "Method 1 name is: "+ method.getMetadata().getAuthor());
             }
             mAdapter = new RecycleViewItemAdapter(mMethods,mInflater);
             mRecyclerView.setAdapter(mAdapter);
@@ -719,7 +749,11 @@ public class FirebaseService {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             Method method = dataSnapshot.getValue(Method.class);
-            List<String> questionnaire = method.getInfo().getQuestionnaire();
+//            List<String> questionnaire = method.getInfo().getQuestionnaire();
+            List<String> questionnaire = new ArrayList<>();
+            for(String entry:method.getInfo().getQuestionnaire().values()){
+                questionnaire.add(entry);
+            }
             QuestionAdapter questionAdapter = new QuestionAdapter(mContext,questionnaire,score);
             mListView.setAdapter(questionAdapter);
         }

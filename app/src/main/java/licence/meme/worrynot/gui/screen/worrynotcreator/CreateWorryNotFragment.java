@@ -1,12 +1,16 @@
 package licence.meme.worrynot.gui.screen.worrynotcreator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import licence.meme.worrynot.R;
 
@@ -18,7 +22,7 @@ import licence.meme.worrynot.R;
  * Use the {@link CreateWorryNotFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateWorryNotFragment extends Fragment {
+public class CreateWorryNotFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +33,7 @@ public class CreateWorryNotFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private Button mBeginButton;
     public CreateWorryNotFragment() {
         // Required empty public constructor
     }
@@ -65,7 +69,10 @@ public class CreateWorryNotFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_worry_not, container, false);
+        View outView = inflater.inflate(R.layout.fragment_create_worry_not, container, false);
+        mBeginButton = (Button)outView.findViewById(R.id.begin_create_worry_not_fragment_btn);
+        mBeginButton.setOnClickListener(this);
+        return outView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -90,6 +97,16 @@ public class CreateWorryNotFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.begin_create_worry_not_fragment_btn:
+                startActivity(new Intent(getContext(), CreateWorryNotInfoActivity.class));
+                break;
+            default:break;
+        }
     }
 
     /**

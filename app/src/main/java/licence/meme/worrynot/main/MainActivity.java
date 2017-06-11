@@ -9,7 +9,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.config.DefaultWorryNotFactory;
 import licence.meme.worrynot.models.FirebaseService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
-
+    private CircleImageView mEmblem;
     private FirebaseService mFirebaseService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRegisterButton = (Button)findViewById(R.id.signup_main_avitivty_btn);
         mEmailEditText = (EditText)findViewById(R.id.email_main_activity_et);
         mPasswordEditText = (EditText)findViewById(R.id.password_main_activity_et);
-
+        mEmblem = (CircleImageView)findViewById(R.id.emblem_main_activity_civ);
         mLoginButton.setOnClickListener(this);
         mForgtoPasswordButton.setOnClickListener(this);
         mRegisterButton.setOnClickListener(this);
+        mEmblem.setOnClickListener(this);
     }
 
     @Override
@@ -55,6 +58,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.signup_main_avitivty_btn:
                 startActivity(new Intent(MainActivity.this,RegisterActivity.class));
                 finish();
+                break;
+            case R.id.emblem_main_activity_civ:
+                mFirebaseService.publishMethod(this, DefaultWorryNotFactory.getLiveInDayTightCompartmentsWorryNot());
+                mFirebaseService.publishMethod(this,DefaultWorryNotFactory.getAnalyzeAndSolveWorryProblemsWorryNot());
+                mFirebaseService.publishMethod(this,DefaultWorryNotFactory.getEliminateFiftyPerCentWorryNot());
                 break;
             default:break;
         }

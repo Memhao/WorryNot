@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:background="@color/colorAccent"
-        android:text="Worry Not Steps"
+        android:text="Worry Not Questions"
         android:textAlignment="center"
         android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"

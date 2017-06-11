@@ -1,5 +1,6 @@
 package licence.meme.worrynot.gui.screen.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,9 +8,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.main.ProfileActivity;
 import licence.meme.worrynot.models.FirebaseService;
 
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
@@ -19,6 +22,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     private EditText mNewPasswordEditText;
     private TextView mTitleTextView;
     private Button mSendMailForResetPasswordButton;
+    private Button mBackButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +36,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         mNewPasswordEditText = (EditText)findViewById(R.id.new_password_change_password_activity_et);
         mTitleTextView = (TextView)findViewById(R.id.title_change_password_activity_tv);
         mSendMailForResetPasswordButton = (Button)findViewById(R.id.send_mail_change_password_activity_btn);
-
+        mBackButton = (Button)findViewById(R.id.back_change_password_activity_btn);
+        mBackButton.setOnClickListener(this);
         mSendMailForResetPasswordButton.setOnClickListener(this);
 
 
@@ -50,6 +55,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                         mOldPasswordEditText.getText().toString(),
                         mNewPasswordEditText.getText().toString());
             break;
+            case R.id.back_change_password_activity_btn:
+                startActivity(new Intent(this, ProfileActivity.class));
+                finish();
+                break;
             default:break;
         }
     }

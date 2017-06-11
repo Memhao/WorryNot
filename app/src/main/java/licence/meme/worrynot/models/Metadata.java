@@ -3,6 +3,7 @@ package licence.meme.worrynot.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xander on 09.04.2017.
@@ -13,12 +14,13 @@ public class Metadata {
     private String description;
     private String name;
     private int rating;
-    private HashMap<String,Comment> comments;
+//    private List<Comment> comments;
+    private Map<String,Comment> comments;
     public Metadata(String author, String description, String name) {
         this.author = author;
         this.description = description;
         this.name = name;
-        this.comments = new HashMap<>();
+        this.comments =  new HashMap<>();
     }
 
     public Metadata(){
@@ -56,11 +58,19 @@ public class Metadata {
         this.rating = rating;
     }
 
-    public  HashMap<String,Comment> getComments() {
+//    public  List<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments( List<Comment> comments) {
+//        this.comments = comments;
+//    }
+
+    public Map<String, Comment> getComments() {
         return comments;
     }
 
-    public void setComments( HashMap<String,Comment> comments) {
+    public void setComments(Map<String, Comment> comments) {
         this.comments = comments;
     }
 

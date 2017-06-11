@@ -7,7 +7,18 @@
     android:background="@drawable/background_rectangle"
     tools:context="licence.meme.worrynot.main.MainActivity">
 
-
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:clickable="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/ic_account_circle_black_48dp"
+        android:id="@+id/emblem_main_activity_civ"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/email_main_activity_et" />
     <EditText
         android:id="@+id/email_main_activity_et"
         android:layout_width="210dp"
@@ -18,14 +29,11 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/password_main_activity_et"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/password_main_activity_et" />
 
     <EditText
         android:id="@+id/password_main_activity_et"
@@ -85,7 +93,7 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="7dp"
         app:layout_constraintHorizontal_bias="0.505" />
 
 </android.support.constraint.ConstraintLayout>

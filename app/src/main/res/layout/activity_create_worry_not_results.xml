@@ -110,7 +110,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/next_create_worry_not_results_btn"
+        android:id="@+id/finish_create_worry_not_results_btn"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:text="FINISH"

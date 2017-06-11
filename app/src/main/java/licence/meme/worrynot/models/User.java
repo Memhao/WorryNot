@@ -22,7 +22,8 @@ public class User {
     private int experience;
     private int level;
 //    private List<Method> methods = new ArrayList<>();//in ordinea in care le bag
-    private HashMap<String,Method> methods = new HashMap<>();//in ordinea in care le bag
+//    private List<Method> methods = new ArrayList<>();//in ordinea in care le bag
+    private HashMap<String,Method> methods = new HashMap<>();
     private Method activeMethod;
     public static User getFirebaseUserInstance(String uid){
         final User user[] = {null};
@@ -60,6 +61,9 @@ public class User {
     public void addMethod(String key,Method method){
         methods.put(key,method);
     }
+//    public void addWorryNot(Method worryNot){
+//        methods.add(worryNot);
+//    }
     public void removeMethod(String key){
         methods.remove(key);
     }
