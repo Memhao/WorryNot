@@ -5,7 +5,7 @@ package licence.meme.worrynot.config;
  */
 
 public interface AnalyzeAndSolveWorryProblems {
-    String NAME = "Eliminate Fifty Per Cent of Tour Business Worries";
+    String NAME = "Analyze And Solve Worry Causes";
     String DESCRIPTION = "1. Get the facts. 2. Analyse the facts.3. Arrive at a decision-and then act on that decision.";
     String STORY =  "I keep six honest serving-men (They taught me all I knew): Their names are What and Why and When And How and Where and Who. -Rudyard Kipling" ;
     String AUTHOR = "Dale Carnegie";

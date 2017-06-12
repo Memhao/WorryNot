@@ -18,9 +18,6 @@ import licence.meme.worrynot.models.Step;
  */
 
 public class DefaultWorryNotFactory {
-    private static Method LiveInDayTightCompartmentsWorryNot;
-    private static Method AnalyzeAndSolveWorryProblemsWorryNot;
-    private static Method EliminateFiftyPerCentWorryNot;
 
     public static Method getLiveInDayTightCompartmentsWorryNot(){
         Metadata metadata = new Metadata();

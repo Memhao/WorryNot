@@ -1,4 +1,4 @@
-package licence.meme.worrynot.activities;
+package licence.meme.worrynot.gui.screen.worrynotstore;
 
 import android.app.Activity;
 import android.net.wifi.WifiEnterpriseConfig;

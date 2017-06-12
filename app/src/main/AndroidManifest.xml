@@ -83,16 +83,16 @@
             android:name=".gui.screen.home.ResultPopUpActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
-            android:name=".activities.MethodDetailsActivity"
+            android:name=".gui.screen.worrynotstore.MethodDetailsActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
-            android:name=".activities.RateMethodActivity"
+            android:name=".gui.screen.worrynotstore.RateMethodActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
-            android:name=".activities.WriteCommentActivity"
+            android:name=".gui.screen.worrynotstore.WriteCommentActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
-            android:name=".activities.ShowMethodCommentsActivity"
+            android:name=".gui.screen.worrynotstore.ShowMethodCommentsActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity android:name=".gui.screen.worrynotcreator.CreateWorryNotInfoActivity" />
         <activity android:name=".gui.screen.worrynotcreator.CreateWorryNotStepsActivity" />

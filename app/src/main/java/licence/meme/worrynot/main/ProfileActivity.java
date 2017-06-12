@@ -21,8 +21,8 @@ import licence.meme.worrynot.fragments.CreateMethodFragment;
 import licence.meme.worrynot.gui.screen.home.HomeFragment;
 import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
 import licence.meme.worrynot.fragments.MethodManagerFragment;
-import licence.meme.worrynot.fragments.MethodsStoreFragment;
-import licence.meme.worrynot.fragments.UserMethodsFragment;
+import licence.meme.worrynot.gui.screen.worrynotstore.MethodsStoreFragment;
+import licence.meme.worrynot.gui.screen.usersworrynots.UserMethodsFragment;
 import licence.meme.worrynot.gui.screen.worrynotcreator.CreateWorryNotFragment;
 
 public class ProfileActivity extends AppCompatActivity implements

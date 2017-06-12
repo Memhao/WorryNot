@@ -15,7 +15,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.adapter.RecycleViewEntryAdapter;
+import licence.meme.worrynot.gui.logic.adapter.RecycleViewEntryAdapter;
 
 public class CreateWorryNotQuestionnaireActivity extends AppCompatActivity implements View.OnClickListener {
 

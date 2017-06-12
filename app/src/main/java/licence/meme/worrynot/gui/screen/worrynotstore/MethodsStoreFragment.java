@@ -1,7 +1,6 @@
-package licence.meme.worrynot.fragments;
+package licence.meme.worrynot.gui.screen.worrynotstore;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,12 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.activities.MethodDetailsActivity;
-import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
+import licence.meme.worrynot.gui.logic.adapter.RecycleViewItemAdapter;
 import licence.meme.worrynot.models.FirebaseService;
 import licence.meme.worrynot.models.RecycleViewItem;
 
@@ -40,9 +37,7 @@ public class MethodsStoreFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
-    private RecycleViewItemAdapter mAdapter;
 
-    private List<RecycleViewItem> mRecycleViewMethodsData;
     public MethodsStoreFragment() {
         // Required empty public constructor
     }
@@ -82,16 +77,6 @@ public class MethodsStoreFragment extends Fragment {
         mRecyclerView = (RecyclerView)return_view.findViewById(R.id.methods_method_store_fragment_rv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        // get them from data base
-//        mRecycleViewMethodsData = RecycleViewMethodsData.getListData();
-//        //RecycleViewMethodsData should be replaced with data from fire base
-//
-//
-//
-//
-//        mAdapter = new RecycleViewItemAdapter(mRecycleViewMethodsData,inflater);
-//        mRecyclerView.setAdapter(mAdapter);
-//        mAdapter.setItemClickCallback(this);
         FirebaseService.getInstance().populateMethodsStoreRecycleView(mRecyclerView,inflater,this.getActivity());
         return return_view;
     }

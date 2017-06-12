@@ -13,10 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.adapter.RecycleViewEntryAdapter;
+import licence.meme.worrynot.gui.logic.adapter.RecycleViewEntryAdapter;
 
 public class CreateWorryNotStepsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String BUNDLE = "CREATE_BUNDLE";

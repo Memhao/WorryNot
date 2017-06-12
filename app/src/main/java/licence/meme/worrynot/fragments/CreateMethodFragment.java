@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.adapter.RecycleViewEntryAdapter;
+import licence.meme.worrynot.gui.logic.adapter.RecycleViewEntryAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

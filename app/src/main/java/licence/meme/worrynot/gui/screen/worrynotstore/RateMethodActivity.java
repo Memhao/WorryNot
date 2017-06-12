@@ -1,4 +1,4 @@
-package licence.meme.worrynot.activities;
+package licence.meme.worrynot.gui.screen.worrynotstore;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

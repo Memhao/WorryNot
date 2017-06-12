@@ -9,9 +9,9 @@
     android:clickable="true"
     >
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_recycle_item_iv"
-        android:src="@drawable/rsz_11logo"
+        android:src="@mipmap/ic_launcher"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_centerVertical="true"
@@ -21,6 +21,7 @@
         android:id="@+id/title_recycle_item_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         android:layout_alignTop="@+id/icon_recycle_item_iv"
         android:layout_marginLeft="72dp"
         android:layout_marginRight="48dp"
@@ -36,6 +37,7 @@
         android:id="@+id/author_recycle_item_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         android:layout_below="@+id/title_recycle_item_tv"
         android:text="Yello Jakarta"
         android:layout_marginLeft="72dp"
@@ -46,15 +48,16 @@
         android:maxLines="1"
         android:textSize="16sp"
         />
-    <ImageView
-        android:id="@+id/favourite_mark_recycle_item_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:padding="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_star_border_black_24dp"
-        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#111"
+        android:id="@+id/line_recycle_item_not"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/author_recycle_item_tv"
+        >
 
+    </View>
 </RelativeLayout>

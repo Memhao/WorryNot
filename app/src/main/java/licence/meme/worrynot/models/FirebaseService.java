@@ -35,12 +35,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.gui.logic.adapter.StepAdapter;
 import licence.meme.worrynot.main.MainActivity;
-import licence.meme.worrynot.activities.MethodDetailsActivity;
+import licence.meme.worrynot.gui.screen.worrynotstore.MethodDetailsActivity;
 import licence.meme.worrynot.main.ProfileActivity;
 import licence.meme.worrynot.gui.screen.home.ResultPopUpActivity;
-import licence.meme.worrynot.adapter.RecycleViewCommentAdapter;
-import licence.meme.worrynot.adapter.RecycleViewItemAdapter;
-import licence.meme.worrynot.adapter.RecycleViewUserMethodAdapter;
+import licence.meme.worrynot.gui.logic.adapter.RecycleViewCommentAdapter;
+import licence.meme.worrynot.gui.logic.adapter.RecycleViewItemAdapter;
+import licence.meme.worrynot.gui.logic.adapter.RecycleViewUserMethodAdapter;
 import licence.meme.worrynot.licence.meme.worrynot.Levels;
 import licence.meme.worrynot.util.Utils;
 
@@ -391,28 +391,30 @@ public class FirebaseService {
     }
 
     public void updateViewActiveMethod(final Context context, final TextView worryNotName, final TextView worryNotDescription, final ListView steps){
-        String uid = mFirebaseUser.getUid();
-        DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Method worryNot = dataSnapshot.getValue(Method.class);
-                worryNotName.setText(worryNot.getMetadata().getName());
-                worryNotDescription.setText(worryNot.getMetadata().getDescription());
+        if(mFirebaseUser != null){
+            String uid = mFirebaseUser.getUid();
+            DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Method worryNot = dataSnapshot.getValue(Method.class);
+                    worryNotName.setText(worryNot.getMetadata().getName());
+                    worryNotDescription.setText(worryNot.getMetadata().getDescription());
 
-                List<String> msteps = new ArrayList<String>();
-                for(String str:worryNot.getInfo().getSteps().values()){
-                    msteps.add(str);
+                    List<String> msteps = new ArrayList<String>();
+                    for(String str:worryNot.getInfo().getSteps().values()){
+                        msteps.add(str);
+                    }
+                    StepAdapter stepAdapter = new StepAdapter(context,msteps);
+                    steps.setAdapter(stepAdapter);
                 }
-                StepAdapter stepAdapter = new StepAdapter(context,msteps);
-                steps.setAdapter(stepAdapter);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     public void updateViewUserBasicInfo(final CircleImageView avatar,final TextView name, final ProgressBar progressBar){
@@ -622,10 +624,11 @@ public class FirebaseService {
 
         }
 
+
+
         @Override
-        public void onItemClick(int position) {
-            Method item= mMethods.get(position);
-            mTextView.setText(item.getMetadata().getName() +"has been selected.");
+        public void onUploadSelected(int position) {
+            uploadMethod(mActivity,mMethods.get(position));
         }
 
         @Override
@@ -692,10 +695,6 @@ public class FirebaseService {
             mActivity.startActivity(i);
         }
 
-        @Override
-        public void onFavouriteIconClick(int position) {
-
-        }
     }
 
 

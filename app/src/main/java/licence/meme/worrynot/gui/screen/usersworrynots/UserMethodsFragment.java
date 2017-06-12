@@ -1,4 +1,4 @@
-package licence.meme.worrynot.fragments;
+package licence.meme.worrynot.gui.screen.usersworrynots;
 
 import android.content.Context;
 import android.net.Uri;
@@ -37,7 +37,6 @@ public class UserMethodsFragment extends Fragment {
 
 
     private RecyclerView mRecyclerView;
-    private Button mSetActiveMethodButton;
     private TextView mSelectedMethodTextView;
     private OnFragmentInteractionListener mListener;
     private static final FirebaseService FIREBASE_SERVICE =FirebaseService.getInstance();
@@ -83,7 +82,6 @@ public class UserMethodsFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         FIREBASE_SERVICE.populateUserMethodsRecyclerView(mRecyclerView,inflater,this.getActivity(),mSelectedMethodTextView);
-        mSetActiveMethodButton = (Button)parentView.findViewById(R.id.set_active_user_methods_fragment_btn);
         return parentView;
     }
 

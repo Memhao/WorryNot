@@ -4,11 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_rectangle"
-    tools:context="licence.meme.worrynot.fragments.MethodsStoreFragment">
-
+    tools:context="licence.meme.worrynot.gui.screen.worrynotstore.MethodsStoreFragment">
+<TextView
+    android:id="@+id/title_methods_store_fragment_tv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    android:textSize="24sp"
+    android:textAlignment="center"
+    android:textColor="#111"
+    android:text = "Worry Nots from the world"
+    />
 <android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    android:layout_below="@id/title_methods_store_fragment_tv"
     android:id="@+id/methods_method_store_fragment_rv"
     ></android.support.v7.widget.RecyclerView>
 
