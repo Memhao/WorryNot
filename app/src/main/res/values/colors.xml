@@ -14,5 +14,5 @@
 
     <color name="colorTertiary">#c0ca33</color>
     <color name="colorTertiaryDark">#8c8800</color>
-
+    <color name="black">#111111</color>
 </resources>

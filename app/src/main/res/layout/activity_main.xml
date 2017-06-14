@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@drawable/ic_account_circle_black_48dp"
+        android:background="@mipmap/ic_launcher"
         android:id="@+id/emblem_main_activity_civ"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/email_main_activity_et" />
@@ -23,6 +23,8 @@
         android:id="@+id/email_main_activity_et"
         android:layout_width="210dp"
         android:layout_height="40dp"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/black"
         android:background="@color/colorAccent"
         android:hint="email"
         android:textStyle="bold"
@@ -41,7 +43,8 @@
         android:layout_height="40dp"
         android:background="@color/colorAccent"
         android:hint="password"
-
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/black"
         android:textStyle="bold"
         android:ems="10"
         android:inputType="textPassword"

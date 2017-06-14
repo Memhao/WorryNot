@@ -51,8 +51,8 @@ public class ProfileActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -60,13 +60,6 @@ public class ProfileActivity extends AppCompatActivity implements
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-//        mSectionsStatePagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
-//
-//        // Set up the ViewPager with the sections adapter.
-//        mViewPager = (ViewPager) findViewById(R.id.container);
-//        mViewPager.setAdapter(mSectionsStatePagerAdapter);
 
 
     }

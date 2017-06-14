@@ -34,11 +34,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText mPasswordEditText;
     private EditText mRepeatPasswordEditText;
 
-    private FirebaseAuth mAuth;
 
     private  Bitmap mProfileImage;
-    private StorageReference mStorage;
-//    private ProgressDialog mProgress;
 
     private FirebaseService mFirebaseService;
 
@@ -49,9 +46,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_register);
-        mAuth = FirebaseAuth.getInstance();
         mFirebaseService = FirebaseService.getInstance();
-        mStorage = FirebaseStorage.getInstance().getReference();
         mRegisterButton = (Button)findViewById(R.id.register_register_activity_btn);
         mBackButton = (Button)findViewById(R.id.back_register_activity_btn);
         mProfileCircleImageView = (CircleImageView)findViewById(R.id.profile_picture_register_activity_civ);
@@ -60,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mPasswordEditText = (EditText)findViewById(R.id.password_register_activity_et);
         mRepeatPasswordEditText = (EditText)findViewById(R.id.repeat_password_register_activity_et);
         mProfileImage = BitmapFactory.decodeResource(getResources(),R.drawable.kakashi_hatake);
-//        mProgress = new ProgressDialog(this);
 
         mRegisterButton.setOnClickListener(this);
         mBackButton.setOnClickListener(this);
@@ -108,24 +102,5 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             mProfileCircleImageView.setImageBitmap(mProfileImage);
         }else
             Toast.makeText(RegisterActivity.this,"Failt to load picture",Toast.LENGTH_LONG).show();
-    }
-
-    private void saveToDatabase(){
-//        mProgress.setMessage("Register in progress...");
-//        Uri uri = data.getData();
-//        StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment()); // random name if u don't like to change the images
-//        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//
-//                mProgress.dismiss();
-//                Toast.makeText(RegisterActivity.this,"Register succeed...",Toast.LENGTH_LONG);
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
     }
 }
