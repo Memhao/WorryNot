@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import licence.meme.worrynot.R;
@@ -23,35 +22,26 @@ import licence.meme.worrynot.R;
  * create an instance of this fragment.
  */
 public class CreateWorryNotFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private static final String USER_NAME = "USER_NAME";
+    private static final String BUNDLE = "CREATE_BUNDLE";
+    private static final String TAG = CreateWorryNotFragment.class.getSimpleName();
+    private static String mUserName;
     private OnFragmentInteractionListener mListener;
     private Button mBeginButton;
+    private Bundle mBundle;
     public CreateWorryNotFragment() {
         // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CreateWorryNotFragment.
+     * @param userName
+     * @return
      */
-    // TODO: Rename and change types and number of parameters
-    public static CreateWorryNotFragment newInstance(String param1, String param2) {
+    public static CreateWorryNotFragment newInstance(String userName) {
         CreateWorryNotFragment fragment = new CreateWorryNotFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(USER_NAME, userName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,8 +50,8 @@ public class CreateWorryNotFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+//            mUserName = getArguments().getString(USER_NAME);
+//            Log.e(TAG,mUserName);
         }
     }
 
@@ -72,6 +62,8 @@ public class CreateWorryNotFragment extends Fragment implements View.OnClickList
         View outView = inflater.inflate(R.layout.fragment_create_worry_not, container, false);
         mBeginButton = (Button)outView.findViewById(R.id.begin_create_worry_not_fragment_btn);
         mBeginButton.setOnClickListener(this);
+        Log.e(TAG,"SECOND");
+        Log.e(TAG,"NAME HAS BEEN TRANSFERED"+mUserName);
         return outView;
     }
 
@@ -103,12 +95,19 @@ public class CreateWorryNotFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.begin_create_worry_not_fragment_btn:
-                startActivity(new Intent(getContext(), CreateWorryNotInfoActivity.class));
+                Intent intent = new Intent(getContext(), CreateWorryNotInfoActivity.class);
+                mBundle = new Bundle();
+                mBundle.putString(USER_NAME,mUserName);
+                intent.putExtra(BUNDLE,mBundle);
+                startActivity(intent);
                 break;
             default:break;
         }
     }
-
+    public void updateName(String name){
+        Log.e(TAG,"Here theare are NAME IS:" + name);
+        this.mUserName = name;
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

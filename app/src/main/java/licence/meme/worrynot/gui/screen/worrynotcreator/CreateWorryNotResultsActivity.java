@@ -29,6 +29,7 @@ public class CreateWorryNotResultsActivity extends AppCompatActivity implements 
     private static final String STORY = "STORY";
     private static final String STEPS = "STEPS";
     private static final String QUESTIONS = "QUESTIONS";
+    private static final String USER_NAME = "USER_NAME";
     private static final String TAG = CreateWorryNotQuestionnaireActivity.class.getSimpleName();
 
     private Button mBackButton;
@@ -64,7 +65,7 @@ public class CreateWorryNotResultsActivity extends AppCompatActivity implements 
                 finish();
                 break;
             case R.id.finish_create_worry_not_results_btn:
-
+                String user_name = mBundle.getString(USER_NAME);
                 String name = mBundle.getString(NAME);
                 String description = mBundle.getString(DESCRIPTION);
                 String story = mBundle.getString(STORY);
@@ -76,7 +77,7 @@ public class CreateWorryNotResultsActivity extends AppCompatActivity implements 
                 String highResult = mHighEditText.getText().toString();
                 String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                Metadata metadata = new Metadata(user,description,name);
+                Metadata metadata = new Metadata(user_name,description,name);
 
                 HashMap hashMapQuestions = new HashMap();
                 for(String s : questions){

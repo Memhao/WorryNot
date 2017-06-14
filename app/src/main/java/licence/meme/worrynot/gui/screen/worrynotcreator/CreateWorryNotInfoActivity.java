@@ -41,7 +41,7 @@ public class CreateWorryNotInfoActivity extends AppCompatActivity implements Vie
         mNameWorryNotEditText.setText("Name");
         mDescriptionWorryNotEditText.setText("Description");
         mStoryWorryNotEditText.setText("Story");
-        mBundle = new Bundle();
+        mBundle = getIntent().getBundleExtra(BUNDLE);
 
         mBackButton.setOnClickListener(this);
         mNextButton.setOnClickListener(this);

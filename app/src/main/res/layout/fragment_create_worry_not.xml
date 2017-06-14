@@ -4,6 +4,7 @@
     android:background="@drawable/background_rectangle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_create_worry_not"
     tools:context="licence.meme.worrynot.gui.screen.worrynotcreator.CreateWorryNotFragment">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

@@ -36,6 +36,7 @@ import licence.meme.worrynot.R;
 import licence.meme.worrynot.gui.adapter.MethodAdapter;
 import licence.meme.worrynot.gui.adapter.QuestionAdapter;
 import licence.meme.worrynot.gui.adapter.StepAdapter;
+import licence.meme.worrynot.gui.screen.home.HomeFragment;
 import licence.meme.worrynot.main.MainActivity;
 import licence.meme.worrynot.gui.screen.worrynotstore.MethodDetailsActivity;
 import licence.meme.worrynot.main.ProfileActivity;
@@ -433,8 +434,7 @@ public class FirebaseService {
             });
         }
     }
-
-    public void updateViewUserBasicInfo(final CircleImageView avatar,final TextView name, final ProgressBar progressBar){
+    public void updateViewUserBasicInfo(final CircleImageView avatar, final TextView name, final ProgressBar progressBar, final HomeFragment.OnUserNameListener listener){
         final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("users").child(uid);
@@ -445,6 +445,8 @@ public class FirebaseService {
                 avatar.setImageBitmap(Utils.decodeFromFirebaseBase64(user.getImage()));
                 name.setText(user.getUsername()+"\n"+user.getLevel());
                 progressBar.setProgress(user.getExperience());
+                if(listener!=null)
+                listener.receiveName(user.getUsername());
             }
 
             @Override

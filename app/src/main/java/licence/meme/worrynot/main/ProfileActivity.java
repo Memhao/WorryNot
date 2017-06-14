@@ -2,14 +2,14 @@ package licence.meme.worrynot.main;
 
 import android.net.Uri;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.graphics.drawable.TintAwareDrawable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +23,7 @@ import licence.meme.worrynot.gui.screen.usersworrynots.UserMethodsFragment;
 import licence.meme.worrynot.gui.screen.worrynotcreator.CreateWorryNotFragment;
 
 public class ProfileActivity extends AppCompatActivity implements
-        HomeFragment.OnFragmentInteractionListener,
+        HomeFragment.OnUserNameListener,
         MethodsStoreFragment.OnFragmentInteractionListener,
         UserMethodsFragment.OnFragmentInteractionListener,
         CreateWorryNotFragment.OnFragmentInteractionListener
@@ -45,7 +45,8 @@ public class ProfileActivity extends AppCompatActivity implements
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    private String userNameFromFragment;
+    private static final String USER_NAME = "USER_NAME";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +92,23 @@ public class ProfileActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
 
     }
+    @Override
+    public void receiveName(String name){
+        mSectionsStatePagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
+        if(mSectionsStatePagerAdapter != null){
+            CreateWorryNotFragment createWorryNotFragment = (CreateWorryNotFragment) mSectionsStatePagerAdapter.getItem(1);
+            if(createWorryNotFragment != null){
+                Log.e("RECEIVE", "NAME is " + name);
+                createWorryNotFragment.updateName(name);
+            }
+            else {
+                Log.e("RECEIVE NAME",",CreateWorryNotFragment");
+            }
+        }else {
+            Log.e("RECEIVE NAME",",Section Pager Adapeter is null");
+        }
 
+    }
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -142,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity implements
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    Fragment homeFragment = new HomeFragment();
+                    Fragment homeFragment =   HomeFragment.newInstance();
                     return homeFragment;
                 case 1:
                     Fragment createMethodFragment = new CreateWorryNotFragment();
@@ -192,7 +209,7 @@ public class ProfileActivity extends AppCompatActivity implements
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    Fragment homeFragment = new HomeFragment();
+                    Fragment homeFragment = HomeFragment.newInstance();
                     return homeFragment;
                 case 1:
                     Fragment methodsContainer = new CreateWorryNotFragment();
