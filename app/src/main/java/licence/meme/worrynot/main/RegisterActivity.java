@@ -20,7 +20,7 @@ import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.controller.FirebaseService;
 import licence.meme.worrynot.util.Utils;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {

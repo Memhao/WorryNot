@@ -17,21 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.fragments.CreateMethodFragment;
 import licence.meme.worrynot.gui.screen.home.HomeFragment;
-import licence.meme.worrynot.fragments.MethodContainerPopUpFragment;
-import licence.meme.worrynot.fragments.MethodManagerFragment;
 import licence.meme.worrynot.gui.screen.worrynotstore.MethodsStoreFragment;
 import licence.meme.worrynot.gui.screen.usersworrynots.UserMethodsFragment;
 import licence.meme.worrynot.gui.screen.worrynotcreator.CreateWorryNotFragment;
 
 public class ProfileActivity extends AppCompatActivity implements
         HomeFragment.OnFragmentInteractionListener,
-        MethodManagerFragment.OnFragmentInteractionListener,
-        MethodContainerPopUpFragment.OnFragmentInteractionListener,
         MethodsStoreFragment.OnFragmentInteractionListener,
         UserMethodsFragment.OnFragmentInteractionListener,
-        CreateMethodFragment.OnFragmentInteractionListener,
         CreateWorryNotFragment.OnFragmentInteractionListener
 {
 
@@ -158,8 +152,6 @@ public class ProfileActivity extends AppCompatActivity implements
                     Fragment homeFragment = new HomeFragment();
                     return homeFragment;
                 case 1:
-//                    Fragment createMethodFragment = new CreateMethodFragment();
-//                    return createMethodFragment;
                     Fragment createMethodFragment = new CreateWorryNotFragment();
                     return createMethodFragment;
                 case 2:
@@ -168,8 +160,6 @@ public class ProfileActivity extends AppCompatActivity implements
                 case 3:
                     Fragment userMethodsContainer = new UserMethodsFragment();
                     return userMethodsContainer;
-//                    Fragment methodsContainer = new MethodContainerPopUpFragment();
-//                    return methodsContainer;
                 default:
                     return null;
             }
@@ -212,13 +202,13 @@ public class ProfileActivity extends AppCompatActivity implements
                     Fragment homeFragment = new HomeFragment();
                     return homeFragment;
                 case 1:
-                    Fragment methodsContainer = new MethodContainerPopUpFragment();
+                    Fragment methodsContainer = new CreateWorryNotFragment();
                     return methodsContainer;
                 case 2:
                     Fragment methodStoreFragment = new MethodsStoreFragment();
                     return methodStoreFragment;
                 case 3:
-                    Fragment methodManagerFragment = new MethodManagerFragment();
+                    Fragment methodManagerFragment = new UserMethodsFragment();
                     return methodManagerFragment;
                 default:
                     return null;

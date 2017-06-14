@@ -1,4 +1,4 @@
-package licence.meme.worrynot.licence.meme.worrynot;
+package licence.meme.worrynot.config;
 
 /**
  * Created by xander on 08.04.2017.

@@ -1,4 +1,4 @@
-package licence.meme.worrynot.gui.logic.adapter;
+package licence.meme.worrynot.gui.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

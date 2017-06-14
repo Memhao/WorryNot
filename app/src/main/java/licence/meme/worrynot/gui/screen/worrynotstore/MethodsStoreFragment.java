@@ -10,12 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.gui.logic.adapter.RecycleViewItemAdapter;
-import licence.meme.worrynot.models.FirebaseService;
-import licence.meme.worrynot.models.RecycleViewItem;
+import licence.meme.worrynot.controller.FirebaseService;
 
 /**
  * A simple {@link Fragment} subclass.

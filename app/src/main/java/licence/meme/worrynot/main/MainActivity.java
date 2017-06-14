@@ -12,7 +12,7 @@ import android.widget.EditText;
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.config.DefaultWorryNotFactory;
-import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.controller.FirebaseService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.controller.FirebaseService;
 
 public class ShowMethodCommentsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final FirebaseService FIREBASE_SERVICE = FirebaseService.getInstance();

@@ -1,4 +1,6 @@
-package licence.meme.worrynot.models;
+package licence.meme.worrynot.gui.recycleview;
+
+import licence.meme.worrynot.models.Comment;
 
 /**
  * Created by xander on 06.06.2017.

@@ -1,4 +1,4 @@
-package licence.meme.worrynot.models;
+package licence.meme.worrynot.controller;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

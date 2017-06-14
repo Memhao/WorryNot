@@ -9,11 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.controller.FirebaseService;
 
 /**
  * A simple {@link Fragment} subclass.

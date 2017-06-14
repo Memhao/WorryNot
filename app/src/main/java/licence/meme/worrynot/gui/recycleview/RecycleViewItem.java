@@ -1,8 +1,10 @@
-package licence.meme.worrynot.models;
+package licence.meme.worrynot.gui.recycleview;
 
 /**
  * Created by xander on 03.06.2017.
  */
+
+import licence.meme.worrynot.models.Method;
 
 /**
  * Representation of Method to be displayed in RecycleView

@@ -1,4 +1,4 @@
-package licence.meme.worrynot.models;
+package licence.meme.worrynot.controller;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,15 +33,23 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.gui.logic.adapter.StepAdapter;
+import licence.meme.worrynot.gui.adapter.MethodAdapter;
+import licence.meme.worrynot.gui.adapter.QuestionAdapter;
+import licence.meme.worrynot.gui.adapter.StepAdapter;
 import licence.meme.worrynot.main.MainActivity;
 import licence.meme.worrynot.gui.screen.worrynotstore.MethodDetailsActivity;
 import licence.meme.worrynot.main.ProfileActivity;
 import licence.meme.worrynot.gui.screen.home.ResultPopUpActivity;
-import licence.meme.worrynot.gui.logic.adapter.RecycleViewCommentAdapter;
-import licence.meme.worrynot.gui.logic.adapter.RecycleViewItemAdapter;
-import licence.meme.worrynot.gui.logic.adapter.RecycleViewUserMethodAdapter;
-import licence.meme.worrynot.licence.meme.worrynot.Levels;
+import licence.meme.worrynot.gui.adapter.RecycleViewCommentAdapter;
+import licence.meme.worrynot.gui.adapter.RecycleViewItemAdapter;
+import licence.meme.worrynot.gui.adapter.RecycleViewUserMethodAdapter;
+import licence.meme.worrynot.config.Levels;
+import licence.meme.worrynot.models.Comment;
+import licence.meme.worrynot.models.Method;
+import licence.meme.worrynot.gui.recycleview.RecycleViewComment;
+import licence.meme.worrynot.gui.recycleview.RecycleViewItem;
+import licence.meme.worrynot.models.Score;
+import licence.meme.worrynot.models.User;
 import licence.meme.worrynot.util.Utils;
 
 public class FirebaseService {
@@ -390,7 +398,16 @@ public class FirebaseService {
         Toast.makeText(context,"Method has been activated",Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * @param context
+     * @param worryNotName
+     * @param worryNotDescription
+     * @param steps
+     */
     public void updateViewActiveMethod(final Context context, final TextView worryNotName, final TextView worryNotDescription, final ListView steps){
+
+//         TODO Pay attention that mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");
+//         TODO when the worry not will be activated pop up activity will go forth
         if(mFirebaseUser != null){
             String uid = mFirebaseUser.getUid();
             DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");

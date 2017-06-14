@@ -1,4 +1,4 @@
-package licence.meme.worrynot.models;
+package licence.meme.worrynot.gui.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.models.Method;
 
 /**
  * Created by xander on 22.05.2017.

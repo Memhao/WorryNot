@@ -10,14 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import licence.meme.worrynot.R;
 import licence.meme.worrynot.main.ProfileActivity;
-import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.controller.FirebaseService;
 import licence.meme.worrynot.models.Info;
 import licence.meme.worrynot.models.Metadata;
 import licence.meme.worrynot.models.Method;

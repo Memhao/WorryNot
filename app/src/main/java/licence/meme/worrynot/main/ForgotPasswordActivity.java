@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.controller.FirebaseService;
 
 public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 

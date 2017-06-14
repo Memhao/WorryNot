@@ -1,4 +1,4 @@
-package licence.meme.worrynot.models;
+package licence.meme.worrynot.gui.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Vector;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.models.Score;
 
 /**
  * Created by xander on 01.06.2017.

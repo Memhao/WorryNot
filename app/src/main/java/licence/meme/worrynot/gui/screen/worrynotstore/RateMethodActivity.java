@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.RatingBar;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.FirebaseService;
-import licence.meme.worrynot.models.MethodRatingManager;
+import licence.meme.worrynot.controller.FirebaseService;
+import licence.meme.worrynot.controller.MethodRatingManager;
 
 public class RateMethodActivity extends AppCompatActivity implements View.OnClickListener {
 

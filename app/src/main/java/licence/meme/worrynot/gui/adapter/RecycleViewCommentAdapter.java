@@ -1,4 +1,4 @@
-package licence.meme.worrynot.gui.logic.adapter;
+package licence.meme.worrynot.gui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.RecycleViewComment;
+import licence.meme.worrynot.gui.recycleview.RecycleViewComment;
 
 /**
  * Created by xander on 06.06.2017.

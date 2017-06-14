@@ -1,7 +1,6 @@
 package licence.meme.worrynot.gui.screen.worrynotstore;
 
 import android.app.Activity;
-import android.net.wifi.WifiEnterpriseConfig;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import licence.meme.worrynot.R;
-import licence.meme.worrynot.models.FirebaseService;
+import licence.meme.worrynot.controller.FirebaseService;
 
 public class WriteCommentActivity extends AppCompatActivity implements View.OnClickListener {
     private TextInputLayout mContainerTextInputLayout;
