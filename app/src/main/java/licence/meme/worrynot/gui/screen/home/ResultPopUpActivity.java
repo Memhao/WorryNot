@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import licence.meme.worrynot.R;
+import licence.meme.worrynot.main.ProfileActivity;
 
 public class ResultPopUpActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView interpretationTextView;
@@ -27,6 +28,9 @@ public class ResultPopUpActivity extends AppCompatActivity implements View.OnCli
         Intent result = getIntent();
         final String TAG_TRANSFER = "RESULT";
         String interpretation = result.getExtras().getString(TAG_TRANSFER);
+//        final String BUNDLE = "BUNDLE_POP_UP";
+//        final String RESULT = "RESULT";
+//        String interpretation = result.getBundleExtra(BUNDLE).getString(RESULT);
         Log.e("ResultPopUpAcitivty","INTERPREATION :"+ interpretation);
 
         titleTextView.setText("Interpretation");

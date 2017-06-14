@@ -131,6 +131,7 @@ public class User {
         this.activeMethod = activeMethod;
     }
 
+
     public void updateExperience(List<Double> ratings){
         double experience = 0.0;
         for(double rating:ratings){

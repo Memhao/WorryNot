@@ -46,9 +46,11 @@ import licence.meme.worrynot.gui.adapter.RecycleViewItemAdapter;
 import licence.meme.worrynot.gui.adapter.RecycleViewUserMethodAdapter;
 import licence.meme.worrynot.config.Levels;
 import licence.meme.worrynot.models.Comment;
+import licence.meme.worrynot.models.Info;
 import licence.meme.worrynot.models.Method;
 import licence.meme.worrynot.gui.recycleview.RecycleViewComment;
 import licence.meme.worrynot.gui.recycleview.RecycleViewItem;
+import licence.meme.worrynot.models.Result;
 import licence.meme.worrynot.models.Score;
 import licence.meme.worrynot.models.User;
 import licence.meme.worrynot.util.Utils;
@@ -74,7 +76,9 @@ public class FirebaseService {
         }
         return  instance;
     }
-
+    public static void releaseInstance(){
+        instance = null;
+    }
     /**
      *  This method is used for sign up a new user If sign up succeed Profile Activity is launched
      *
@@ -509,13 +513,13 @@ public class FirebaseService {
     public void popUpAdvice(int score, final Activity activity) {
         Log.e("FireBaseService","----SCORE:"+score);
         String uid = mFirebaseUser.getUid();
-        DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod");
+        DatabaseReference ref = mFirebaseDatabase.getReference("users").child(uid).child("activeMethod").child("info").child("results");
         if(score<3){
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Method method = dataSnapshot.getValue(Method.class);
-                    String result = method.getInfo().getResults().getLow();
+                    Result resultD = dataSnapshot.getValue(Result.class);
+                    String result = resultD.getLow();
                     Log.e("FireBaseService","----RESULT FROM FIREBASE <3 :"+ result );
                     Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
                     final String TAG_TRANSFER = "RESULT";
@@ -528,13 +532,12 @@ public class FirebaseService {
 
                 }
             });
-            //bring in results low from database into a pop up window
         }else if(score>3){
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Method method = dataSnapshot.getValue(Method.class);
-                    String result = method.getInfo().getResults().getHigh();
+                    Result resultD = dataSnapshot.getValue(Result.class);
+                    String result = resultD.getHigh();
                     Log.e("FireBaseService","----RESULT FROM FIREBASE >3 :"+ result);
                     Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
                     final String TAG_TRANSFER = "RESULT";
@@ -547,13 +550,12 @@ public class FirebaseService {
 
                 }
             });
-            //bring in results high from database
-        }else{
+        }else if (score == 3){
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Method method = dataSnapshot.getValue(Method.class);
-                    String result = method.getInfo().getResults().getMedium();
+                    Result resultD = dataSnapshot.getValue(Result.class);
+                    String result = resultD.getMedium();
                     Log.e("FireBaseService","----RESULT FROM FIREBASE =3 :"+ result);
                     Intent toResultPopUpActivityIntent = new Intent(activity, ResultPopUpActivity.class);
                     final String TAG_TRANSFER = "RESULT";
@@ -566,7 +568,6 @@ public class FirebaseService {
 
                 }
             });
-            //bring in results medium from database
         }
 
     }
