@@ -30,7 +30,7 @@ public class MethodsStoreFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private static String userName;
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
 
@@ -73,7 +73,7 @@ public class MethodsStoreFragment extends Fragment {
         mRecyclerView = (RecyclerView)return_view.findViewById(R.id.methods_method_store_fragment_rv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        FirebaseService.getInstance().populateMethodsStoreRecycleView(mRecyclerView,inflater,this.getActivity());
+        FirebaseService.getInstance().populateMethodsStoreRecycleView(mRecyclerView,inflater,this.getActivity(),userName);
         return return_view;
     }
 
@@ -102,7 +102,9 @@ public class MethodsStoreFragment extends Fragment {
     }
 
 
-
+    public static void setUserName(String name){
+        userName = name;
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

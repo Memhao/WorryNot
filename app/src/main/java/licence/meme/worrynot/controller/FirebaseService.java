@@ -295,12 +295,13 @@ public class FirebaseService {
     }
 
 
-    public void writeComment(final Activity activity,final String methodKey,final String commentLine){
+    public void writeComment(final Activity activity,final String methodKey,final String commentLine,String author){
         String uid = mFirebaseUser.getUid();
         DatabaseReference commentsDatabaseReference = FirebaseDatabase.getInstance().getReference().child("methods").child(methodKey).child("metadata").child("comments");
 
         Comment comment = new Comment();
-        comment.setId(uid);
+        Log.e(TAG,"AUTHOR IS ..." + author);
+        comment.setId(author);
         comment.setMessage(commentLine);
         commentsDatabaseReference.child(uid).setValue(comment);
         Toast.makeText(activity,"Thanks for your time !",Toast.LENGTH_SHORT).show();
@@ -349,16 +350,16 @@ public class FirebaseService {
         sourceMethodsPath.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    destMethodsUserPath.setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                            if(databaseError != null){
-                                Toast.makeText(context,"Download fail, please try again",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(context,"Download succeed, please check your WorryNot list ",Toast.LENGTH_SHORT).show();
-                            }
+                destMethodsUserPath.setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if(databaseError != null){
+                            Toast.makeText(context,"Download fail, please try again",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context,"Download succeed, please check your WorryNot list ",Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }
+                });
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -450,7 +451,7 @@ public class FirebaseService {
                 name.setText(user.getUsername()+"\n"+user.getLevel());
                 progressBar.setProgress(user.getExperience());
                 if(listener!=null)
-                listener.receiveName(user.getUsername());
+                    listener.receiveName(user.getUsername());
             }
 
             @Override
@@ -494,8 +495,8 @@ public class FirebaseService {
     }
 
 
-    public void populateMethodsStoreRecycleView(RecyclerView recyclerView, LayoutInflater inflater,Activity activity){
-        MethodsStoreEventListener methodsStoreEventListener = new MethodsStoreEventListener(recyclerView,inflater,activity);
+    public void populateMethodsStoreRecycleView(RecyclerView recyclerView, LayoutInflater inflater,Activity activity,String userName){
+        MethodsStoreEventListener methodsStoreEventListener = new MethodsStoreEventListener(recyclerView,inflater,activity,userName);
         mDatabaseReference.child("methods").addValueEventListener(methodsStoreEventListener);
     }
 
@@ -660,9 +661,10 @@ public class FirebaseService {
     }
 
 
-        private class MethodsStoreEventListener implements ValueEventListener, RecycleViewItemAdapter.ItemClickCallback{
+    private class MethodsStoreEventListener implements ValueEventListener, RecycleViewItemAdapter.ItemClickCallback{
         private static final String METHOD_TITLE = "METHOD_TITLE";
         private static final String METHOD_AUTHOR = "METHOD_AUTHOR";
+        private static final String USER_NAME = "USER_NAME";
         private static final String METHOD_RATING = "METHOD_RATING";
         private static final String METHOD_DESCRIPTION = "METHOD_DESCRIPTION";
         private static final String KEY = "KEY";
@@ -673,12 +675,13 @@ public class FirebaseService {
         private List<RecycleViewItem> mMethods;
         private RecycleViewItemAdapter mAdapter;
         private Activity mActivity;
-        public MethodsStoreEventListener(RecyclerView recyclerView, LayoutInflater inflater,Activity activity) {
+        private String mUserName;
+        public MethodsStoreEventListener(RecyclerView recyclerView, LayoutInflater inflater,Activity activity,String userName) {
             this.mRecyclerView = recyclerView;
             this.mInflater = inflater;
             this.mActivity = activity;
             mMethods = new ArrayList<>();
-
+            this.mUserName = userName;
         }
 
         @Override
@@ -706,6 +709,7 @@ public class FirebaseService {
             Intent i = new Intent(mActivity, MethodDetailsActivity.class);
 
             Bundle bundle = new Bundle();
+            bundle.putString(USER_NAME,mUserName);
             bundle.putString(METHOD_TITLE,item.getItemName());
             bundle.putString(METHOD_AUTHOR,item.getItemAuthor());
             bundle.putInt(METHOD_RATING,item.getItemRating());

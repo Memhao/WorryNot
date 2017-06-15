@@ -18,6 +18,7 @@ public class WriteCommentActivity extends AppCompatActivity implements View.OnCl
     private EditText mCommentEditText;
     private Button mCommentButton;
     private Bundle mBundle;
+    private static final String USER_NAME = "USER_NAME";
     private static final String KEY = "KEY";
     private static final String WRITE_COMMENT_BUNDLE = "WRITE_COMMENT_BUNDLE";
     private static final FirebaseService FIREBASE_SERVICE = FirebaseService.getInstance();
@@ -50,7 +51,7 @@ public class WriteCommentActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.submit_comm_write_comment_activity_btn){
-            FIREBASE_SERVICE.writeComment(this,mBundle.getString(KEY),mCommentEditText.getText().toString());
+            FIREBASE_SERVICE.writeComment(this,mBundle.getString(KEY),mCommentEditText.getText().toString(),mBundle.getString(USER_NAME));
             finish();
         }
     }

@@ -107,7 +107,18 @@ public class ProfileActivity extends AppCompatActivity implements
         }else {
             Log.e("RECEIVE NAME",",Section Pager Adapeter is null");
         }
-
+        if(mSectionsStatePagerAdapter != null){
+            MethodsStoreFragment methodsStoreFragment = (MethodsStoreFragment) mSectionsStatePagerAdapter.getItem(2);
+            if(methodsStoreFragment != null){
+                Log.e("SET", "NAME is " + name);
+                methodsStoreFragment.setUserName(name);
+            }
+            else {
+                Log.e("SET NAME",",MethodsStoreFragment");
+            }
+        }else {
+            Log.e("SET NAME",",Section Pager Adapeter is null");
+        }
     }
     /**
      * A placeholder fragment containing a simple view.
